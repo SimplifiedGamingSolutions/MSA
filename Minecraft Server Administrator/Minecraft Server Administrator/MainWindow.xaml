@@ -1,23 +1,42 @@
 ﻿<Fluent:RibbonWindow x:Class="Minecraft_Server_Administrator.MainWindow"
-     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-     xmlns:Fluent="clr-namespace:Fluent;assembly=Fluent"
-     Title="Fluent.Sample.Foundation" Width="500" Height="250" >
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:Fluent="clr-namespace:Fluent;assembly=Fluent"
+ Title="Fluent.Sample.Foundation" Width="500" Height="250" >
     <Grid>
-            <Fluent:Ribbon>
-                <!--Backstage-->
-                <Fluent:Ribbon.Menu>
-                    <Fluent:Backstage>
-                    </Fluent:Backstage>
-                </Fluent:Ribbon.Menu>
-                <!--Tabs-->
-                <Fluent:RibbonTabItem Header="Tab">
-                    <Fluent:RibbonGroupBox Header="Group">
-                        <Fluent:Button Name="buttonGreen" Header="Green" Icon="Images\Green.png" LargeIcon="Images\GreenLarge.png" />
-                        <Fluent:Button Name="buttonGray" Header="Grey" Icon="Images\Gray.png" LargeIcon="Images\GrayLarge.png" />
-                    </Fluent:RibbonGroupBox>
-                </Fluent:RibbonTabItem>
-            </Fluent:Ribbon>
-
+        <Fluent:Ribbon>
+            <!--Backstage-->
+            <Fluent:Ribbon.Menu>
+                <Fluent:Backstage>
+                    <Fluent:BackstageTabControl>
+                        <Fluent:BackstageTabItem Header="New"/>
+                        <Fluent:BackstageTabItem Header="Print"/>
+                        <Fluent:Button Header="Blue" Icon="Images\Blue.png"/>
+                    </Fluent:BackstageTabControl>
+                </Fluent:Backstage>
+            </Fluent:Ribbon.Menu>
+            <!--Tabs-->
+            <Fluent:RibbonTabItem Header="Tab">
+                <Fluent:RibbonGroupBox Header="Group">
+                    <Fluent:Button Name="buttonGreen" Header="Green" Icon="Images\Green.png" LargeIcon="Images\GreenLarge.png" />
+                    <Fluent:Button Name="buttonGray" Header="Grey" Icon="Images\Gray.png" LargeIcon="Images\GrayLarge.png" />
+                </Fluent:RibbonGroupBox>
+            </Fluent:RibbonTabItem>
+            <!--Contextual Tabs-->
+            <Fluent:RibbonTabItem Header="CT" Group="{Binding ElementName=toolsGroup}"/>
+            <!--Contextual Tab Groups-->
+            <Fluent:Ribbon.ContextualGroups>
+                <Fluent:RibbonContextualTabGroup Header="Tools" Visibility="Visible" x:Name="toolsGroup" Background="Green" BorderBrush="Green" />
+            </Fluent:Ribbon.ContextualGroups>
+            <!--Quick Access Toolbar Items-->
+            <Fluent:Ribbon.QuickAccessItems>
+                <!--Use Content or Target Property to set QAT item-->
+                <Fluent:QuickAccessMenuItem IsChecked="true">
+                    <Fluent:Button Header="Pink" Icon="Images\Pink.png" />
+                </Fluent:QuickAccessMenuItem>
+                <!--You Can Just Bind with Any Control-->
+                <Fluent:QuickAccessMenuItem Target="{Binding ElementName=buttonGreen}"/>
+            </Fluent:Ribbon.QuickAccessItems>            
+        </Fluent:Ribbon>
     </Grid>
-</Fluent:RibbonWindow>
+    </Fluent:RibbonWindow>
