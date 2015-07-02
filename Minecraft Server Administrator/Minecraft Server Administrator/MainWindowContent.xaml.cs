@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Minecraft_Server_Administrator.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,18 +17,21 @@ using System.Windows.Shapes;
 namespace Minecraft_Server_Administrator
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for MainWindowContent.xaml
     /// </summary>
-    public partial class MainWindow
+    public partial class MainWindowContent : UserControl
     {
-        public MainWindow()
+        private readonly MainViewModel viewModel;
+        public MainWindowContent()
         {
             InitializeComponent();
+
+            this.viewModel = new MainViewModel();
+            this.DataContext = this.viewModel;
         }
         private void ZoomSlider_OnValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             TextOptions.SetTextFormattingMode(this, e.NewValue > 1.0 ? TextFormattingMode.Ideal : TextFormattingMode.Display);
         }
     }
-
 }

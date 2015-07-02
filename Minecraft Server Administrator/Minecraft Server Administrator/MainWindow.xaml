@@ -3,57 +3,16 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:Fluent="clr-namespace:Fluent;assembly=Fluent"
         xmlns:msa="clr-namespace:Minecraft_Server_Administrator"
- Title="Minecraft Server Administrator" Width="500" Height="400" >
-    <Grid>
-        <Fluent:Ribbon>
-            <!--Backstage-->
-            <Fluent:Ribbon.Menu>
-                <Fluent:Backstage>
-                    <Fluent:BackstageTabControl>
-                        <Fluent:BackstageTabItem Header="New"/>
-                        <Fluent:BackstageTabItem Header="Print"/>
-                        <Fluent:Button Header="Blue" Icon="pack://application:,,,/Minecraft Server Administrator;component/Images/Blue.png"/>
-                    </Fluent:BackstageTabControl>
-                </Fluent:Backstage>
-            </Fluent:Ribbon.Menu>
-            <!--Tabs-->
-            <Fluent:RibbonTabItem Header="Server">
-                <Fluent:RibbonGroupBox Header="Group">
-                    <Fluent:Button Name="buttonStart" Header="Start" Icon="pack://application:,,,/Minecraft Server Administrator;component/Images/Green.png" LargeIcon="pack://application:,,,/Minecraft Server Administrator;component/Images/GreenLarge.png" />
-                    <Fluent:Button Name="buttonStop" Header="Stop" Icon="pack://application:,,,/Minecraft Server Administrator;component/Images/Gray.png" LargeIcon="pack://application:,,,/Minecraft Server Administrator;component/Images/GrayLarge.png" />
-                    <Fluent:Button Name="buttonRestart" Header="Restart" Icon="pack://application:,,,/Minecraft Server Administrator;component/Images/Gray.png" LargeIcon="pack://application:,,,/Minecraft Server Administrator;component/Images/GrayLarge.png" />
-                </Fluent:RibbonGroupBox>
-            </Fluent:RibbonTabItem>
-            <Fluent:RibbonTabItem Header="Configuration">
-                <Fluent:RibbonGroupBox Header="Group">
-                    <Fluent:Button Name="buttonGreen" Header="Green" Icon="pack://application:,,,/Minecraft Server Administrator;component/Images/Green.png" LargeIcon="pack://application:,,,/Minecraft Server Administrator;component/Images/GreenLarge.png" />
-                    <Fluent:Button Name="buttonGray" Header="Grey" Icon="pack://application:,,,/Minecraft Server Administrator;component/Images/Gray.png" LargeIcon="pack://application:,,,/Minecraft Server Administrator;component/Images/GrayLarge.png" />
-                </Fluent:RibbonGroupBox>
-            </Fluent:RibbonTabItem>
-            <Fluent:RibbonTabItem Header="Logs">
-                <Fluent:RibbonGroupBox Header="Group">
-                    <Fluent:Button Name="buttonGreens" Header="Green" Icon="pack://application:,,,/Minecraft Server Administrator;component/Images/Green.png" LargeIcon="pack://application:,,,/Minecraft Server Administrator;component/Images/GreenLarge.png" />
-                    <Fluent:Button Name="buttonGrays" Header="Grey" Icon="pack://application:,,,/Minecraft Server Administrator;component/Images/Gray.png" LargeIcon="pack://application:,,,/Minecraft Server Administrator;component/Images/GrayLarge.png" />
-                </Fluent:RibbonGroupBox>
-            </Fluent:RibbonTabItem>
-            <!--Contextual Tabs-->
-            <Fluent:RibbonTabItem Header="CT" Group="{Binding ElementName=toolsGroup}"/>
-            <!--Contextual Tab Groups-->
-            <Fluent:Ribbon.ContextualGroups>
-                <Fluent:RibbonContextualTabGroup Header="Tools" Visibility="Visible" x:Name="toolsGroup" Background="Green" BorderBrush="Green" />
-            </Fluent:Ribbon.ContextualGroups>
-            <!--Quick Access Toolbar Items-->
-            <Fluent:Ribbon.QuickAccessItems>
-                <!--Use Content or Target Property to set QAT item-->
-                <Fluent:QuickAccessMenuItem IsChecked="true">
-                    <Fluent:Button Header="Pink" Icon="pack://application:,,,/Minecraft Server Administrator;component/Images/Pink.png" />
-                </Fluent:QuickAccessMenuItem>
-                <!--You Can Just Bind with Any Control-->
-                <Fluent:QuickAccessMenuItem Target="{Binding ElementName=buttonGreen}"/>
-            </Fluent:Ribbon.QuickAccessItems>
-            
-
-        </Fluent:Ribbon>
-    </Grid>
-    </Fluent:RibbonWindow>
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                     Title="{Binding DataContext.Title, ElementName=TestContent}"
+                     DontUseDwm="False"
+                     Height="768"
+                     Width="1024"
+                     MinWidth="80"
+                     MinHeight="60"
+                     mc:Ignorable="d"
+                     WindowState="Normal">
+    <msa:MainWindowContent x:Name="TestContent" />
+</Fluent:RibbonWindow>
 

@@ -1,0 +1,165 @@
+﻿<UserControl x:Class="Minecraft_Server_Administrator.MainWindowContent"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:Fluent="clr-namespace:Fluent;assembly=Fluent"
+             xmlns:System="clr-namespace:System;assembly=mscorlib"
+             xmlns:msa="clr-namespace:Minecraft_Server_Administrator"
+             xmlns:viewModels="clr-namespace:Minecraft_Server_Administrator.ViewModels"
+             mc:Ignorable="d" 
+             d:DesignHeight="400" d:DesignWidth="500"
+             x:Name="MinecraftServerAdministratorControl"
+             d:DataContext="{d:DesignInstance viewModels:MainViewModel, IsDesignTimeCreatable=True}">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/Minecraft Server Administrator;component/Images/VectorIcons.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <BooleanToVisibilityConverter x:Key="boolToVisibilityConverter" />
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <!--<UserControl.LayoutTransform>
+        <ScaleTransform ScaleX="{Binding Zoom}" 
+                        ScaleY="{Binding Zoom}" />
+    </UserControl.LayoutTransform>-->
+    <Grid>
+        <Grid.Resources>
+            <DataTemplate x:Key="middleDataItemTemplate"
+                          DataType="{x:Type viewModels:GallerySampleDataItemViewModel}">
+                <Border>
+                    <StackPanel Orientation="Horizontal"
+                                HorizontalAlignment="Left">
+                        <Image Source="{Binding Icon}"
+                               Stretch="UniformToFill" />
+                        <TextBlock Text="{Binding Path=Text, Mode=OneWay}"
+                                   FontSize="10"
+                                   VerticalAlignment="Center" />
+                    </StackPanel>
+                </Border>
+            </DataTemplate>
+
+            <DataTemplate x:Key="largeDataItemTemplate"
+                          DataType="{x:Type viewModels:GallerySampleDataItemViewModel}">
+                <Border ToolTip="{Binding Text}">
+                    <Image Source="{Binding IconLarge}" />
+                </Border>
+            </DataTemplate>
+        </Grid.Resources>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Fluent:Ribbon AutomaticStateManagement="True"
+                       x:Name="ribbon">
+
+            <Fluent:Ribbon.LayoutTransform>
+                <ScaleTransform ScaleX="{Binding Zoom}" 
+                        ScaleY="{Binding Zoom}" />
+            </Fluent:Ribbon.LayoutTransform>
+            <!--Backstage-->
+            <Fluent:Ribbon.Menu>
+                <Fluent:Backstage Visibility="{Binding IsChecked, ElementName=UseBackstage, Converter={StaticResource boolToVisibilityConverter}}">
+                    <Fluent:BackstageTabControl>
+                        <Fluent:BackstageTabItem Header="New"/>
+                        <Fluent:BackstageTabItem Header="Print"/>
+                        <Fluent:Button Header="Blue" Icon="pack://application:,,,/Minecraft Server Administrator;component/Images/Blue.png"/>
+                    </Fluent:BackstageTabControl>
+                </Fluent:Backstage>
+            </Fluent:Ribbon.Menu>
+            <!--Tabs-->
+            <Fluent:RibbonTabItem Header="Server">
+                <Fluent:RibbonGroupBox Header="Group">
+                    <Fluent:Button Name="buttonStart" Header="Start" Icon="pack://application:,,,/Minecraft Server Administrator;component/Images/Green.png" LargeIcon="pack://application:,,,/Minecraft Server Administrator;component/Images/GreenLarge.png" />
+                    <Fluent:Button Name="buttonStop" Header="Stop" Icon="pack://application:,,,/Minecraft Server Administrator;component/Images/Gray.png" LargeIcon="pack://application:,,,/Minecraft Server Administrator;component/Images/GrayLarge.png" />
+                    <Fluent:Button Name="buttonRestart" Header="Restart" Icon="pack://application:,,,/Minecraft Server Administrator;component/Images/Gray.png" LargeIcon="pack://application:,,,/Minecraft Server Administrator;component/Images/GrayLarge.png" />
+                </Fluent:RibbonGroupBox>
+            </Fluent:RibbonTabItem>
+            <Fluent:RibbonTabItem Header="Configuration">
+                <Fluent:RibbonGroupBox Header="Group">
+                    <Fluent:Button Name="buttonGreen" Header="Green" Icon="pack://application:,,,/Minecraft Server Administrator;component/Images/Green.png" LargeIcon="pack://application:,,,/Minecraft Server Administrator;component/Images/GreenLarge.png" />
+                    <Fluent:Button Name="buttonGray" Header="Grey" Icon="pack://application:,,,/Minecraft Server Administrator;component/Images/Gray.png" LargeIcon="pack://application:,,,/Minecraft Server Administrator;component/Images/GrayLarge.png" />
+                </Fluent:RibbonGroupBox>
+            </Fluent:RibbonTabItem>
+            <Fluent:RibbonTabItem Header="Logs">
+                <Fluent:RibbonGroupBox Header="Group">
+                    <Fluent:Button Name="buttonGreens" Header="Green" Icon="pack://application:,,,/Minecraft Server Administrator;component/Images/Green.png" LargeIcon="pack://application:,,,/Minecraft Server Administrator;component/Images/GreenLarge.png" />
+                    <Fluent:Button Name="buttonGrays" Header="Grey" Icon="pack://application:,,,/Minecraft Server Administrator;component/Images/Gray.png" LargeIcon="pack://application:,,,/Minecraft Server Administrator;component/Images/GrayLarge.png" />
+                </Fluent:RibbonGroupBox>
+            </Fluent:RibbonTabItem>
+            <!--Contextual Tabs-->
+            <Fluent:RibbonTabItem Header="CT" Group="{Binding ElementName=toolsGroup}"/>
+            <!--Contextual Tab Groups-->
+            <Fluent:Ribbon.ContextualGroups>
+                <Fluent:RibbonContextualTabGroup Header="Tools" Visibility="Visible" x:Name="toolsGroup" Background="Green" BorderBrush="Green" />
+            </Fluent:Ribbon.ContextualGroups>
+            <!--Quick Access Toolbar Items-->
+            <Fluent:Ribbon.QuickAccessItems>
+                <!--Use Content or Target Property to set QAT item-->
+                <Fluent:QuickAccessMenuItem IsChecked="true">
+                    <Fluent:Button Header="Pink" Icon="pack://application:,,,/Minecraft Server Administrator;component/Images/Pink.png" />
+                </Fluent:QuickAccessMenuItem>
+                <!--You Can Just Bind with Any Control-->
+                <Fluent:QuickAccessMenuItem Target="{Binding ElementName=buttonGreen}"/>
+            </Fluent:Ribbon.QuickAccessItems>
+
+
+        </Fluent:Ribbon>
+
+        <TabControl Grid.Row="1">
+
+            <TabControl.LayoutTransform>
+                <ScaleTransform ScaleX="{Binding Zoom}" 
+                        ScaleY="{Binding Zoom}" />
+            </TabControl.LayoutTransform>
+            <TabItem Header="Home">
+                <StackPanel>
+                    <TextBlock TextWrapping="Wrap">
+                        <Run FontWeight="ExtraBold" FontSize="18">Minecraft Server Administrator</Run>
+                        <LineBreak />
+                        This is our program
+                        <LineBreak />
+                        Looking even better
+                        <LineBreak />
+                        Than before
+                    </TextBlock>
+                </StackPanel>
+            </TabItem>
+        </TabControl>
+        <Fluent:StatusBar HorizontalAlignment="Stretch"
+                          VerticalAlignment="Bottom"						  
+                          Visibility="{Binding IsChecked, ElementName=IsStatusBarVisibleCheckBox, Converter={StaticResource boolToVisibilityConverter}}"
+                          Grid.Row="2">
+            <Fluent:StatusBarItem Title="Words Width"
+                                  Value="150"
+                                  HorizontalAlignment="Left">
+                <TextBlock Text="150 px" />
+            </Fluent:StatusBarItem>
+            <Separator HorizontalAlignment="Left" />
+            <Fluent:StatusBarItem Title="Selected Words"
+                                  Value="15"
+                                  ToolTip="This is Selected Words"
+                                  Content="15"
+                                  HorizontalAlignment="Left" />
+            <Separator HorizontalAlignment="Left" />
+            <Fluent:StatusBarItem Title="Zoom"
+                                  HorizontalAlignment="Right"
+                                  Value="{Binding Value, ElementName=zoomSlider, StringFormat={}{0:P}}" />
+            <Fluent:StatusBarItem Title="Zoom Slider"
+                                  HorizontalAlignment="Right">
+                <Slider x:Name="zoomSlider"
+                        Minimum="0.5"
+                        Maximum="2.0"
+                        IsDirectionReversed="False"
+                        Style="{DynamicResource ZoomSliderStyle}"
+                        Value="{Binding Zoom}"
+                        IsSnapToTickEnabled="True"
+                        TickFrequency="0.1"
+                        SmallChange="0.1"
+                        LargeChange="0.1"
+                        ValueChanged="ZoomSlider_OnValueChanged"/>
+            </Fluent:StatusBarItem>
+        </Fluent:StatusBar>
+    </Grid>
+</UserControl>
