@@ -31,7 +31,7 @@ namespace Minecraft_Server_Administrator.Converters
         public object Convert(object[] values, Type targetType, object parameter,
             System.Globalization.CultureInfo culture)
         {
-            DockPanel dockPanel = values[0] as DockPanel;
+            Grid dockPanel = values[0] as Grid;
             return dockPanel.ActualWidth * (double)values[2];
         }
 
@@ -47,7 +47,7 @@ namespace Minecraft_Server_Administrator.Converters
         public object Convert(object[] values, Type targetType, object parameter,
             System.Globalization.CultureInfo culture)
         {
-            DockPanel dockPanel = values[0] as DockPanel;
+            Grid dockPanel = values[0] as Grid;
             return dockPanel.ActualHeight * (double)values[2];
         }
 
