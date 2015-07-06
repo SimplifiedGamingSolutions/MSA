@@ -39,6 +39,14 @@
     <StartupObject>Minecraft_Server_Administrator.App</StartupObject>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ConsoleControl.WPF, Version=1.1.0.0, Culture=neutral, PublicKeyToken=bb812711dbc508e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\ConsoleControl.WPF.1.1.0.0\lib\net40\ConsoleControl.WPF.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ConsoleControlAPI, Version=1.1.0.0, Culture=neutral, PublicKeyToken=7c86b8a36b9c33e2, processorArchitecture=MSIL">
+      <HintPath>..\packages\ConsoleControl.WPF.1.1.0.0\lib\net40\ConsoleControlAPI.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Fluent, Version=3.4.0.0, Culture=neutral, PublicKeyToken=3e436e32a8c5546f, processorArchitecture=MSIL">
       <HintPath>..\packages\Fluent.Ribbon.3.4.0\lib\net45\Fluent.dll</HintPath>
       <Private>True</Private>
@@ -72,6 +80,7 @@
     </ApplicationDefinition>
     <Compile Include="Commanding\IRelayCommand.cs" />
     <Compile Include="Commanding\RelayCommand.cs" />
+    <Compile Include="Converters\Converters.cs" />
     <Compile Include="ViewModels\ColorViewModel.cs" />
     <Compile Include="ViewModels\FontsViewModel.cs" />
     <Compile Include="ViewModels\GalleryItemViewModel.cs" />

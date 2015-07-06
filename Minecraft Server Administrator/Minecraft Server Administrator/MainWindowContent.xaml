@@ -1,23 +1,41 @@
-﻿<UserControl x:Class="Minecraft_Server_Administrator.MainWindowContent"
+﻿<UserControl xmlns:WPF="clr-namespace:ConsoleControl.WPF;assembly=ConsoleControl.WPF"  x:Class="Minecraft_Server_Administrator.MainWindowContent"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:Fluent="clr-namespace:Fluent;assembly=Fluent"
              xmlns:System="clr-namespace:System;assembly=mscorlib"
+             xmlns:Console="clr-namespace:System;assembly=mscorlib"
              xmlns:msa="clr-namespace:Minecraft_Server_Administrator"
+             xmlns:con="clr-namespace:Minecraft_Server_Administrator.Converters"
              xmlns:viewModels="clr-namespace:Minecraft_Server_Administrator.ViewModels"
              mc:Ignorable="d" 
              d:DesignHeight="400" d:DesignWidth="500"
              x:Name="MinecraftServerAdministratorControl"
              d:DataContext="{d:DesignInstance viewModels:MainViewModel, IsDesignTimeCreatable=True}">
+
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/Minecraft Server Administrator;component/Images/VectorIcons.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            <con:RelativeWidthConverter x:Key="relativeWidthConverter" />
+            <con:RelativeHeightConverter x:Key="relativeHeightConverter" />
+            <con:TabSizeConverter x:Key="tabSizeConverter" />
             <BooleanToVisibilityConverter x:Key="boolToVisibilityConverter" />
+
+            <Style TargetType="{x:Type TabItem}">
+                <Setter Property="Width">
+                    <Setter.Value>
+                        <MultiBinding Converter="{StaticResource tabSizeConverter}">
+                            <Binding ElementName="MainTabControl" />
+                            <Binding ElementName="MainTabControl" Path="ActualWidth" />
+                        </MultiBinding>
+                    </Setter.Value>
+                </Setter>
+            </Style>
         </ResourceDictionary>
+
     </UserControl.Resources>
     <!--<UserControl.LayoutTransform>
         <ScaleTransform ScaleX="{Binding Zoom}" 
@@ -38,7 +56,6 @@
                     </StackPanel>
                 </Border>
             </DataTemplate>
-
             <DataTemplate x:Key="largeDataItemTemplate"
                           DataType="{x:Type viewModels:GallerySampleDataItemViewModel}">
                 <Border ToolTip="{Binding Text}">
@@ -53,7 +70,6 @@
         </Grid.RowDefinitions>
         <Fluent:Ribbon AutomaticStateManagement="True"
                        x:Name="ribbon">
-
             <Fluent:Ribbon.LayoutTransform>
                 <ScaleTransform ScaleX="{Binding Zoom}" 
                         ScaleY="{Binding Zoom}" />
@@ -103,28 +119,45 @@
                 <!--You Can Just Bind with Any Control-->
                 <Fluent:QuickAccessMenuItem Target="{Binding ElementName=buttonGreen}"/>
             </Fluent:Ribbon.QuickAccessItems>
-
-
         </Fluent:Ribbon>
-
-        <TabControl Grid.Row="1">
-
+        <TabControl x:Name="MainTabControl" Grid.Row="1">
             <TabControl.LayoutTransform>
                 <ScaleTransform ScaleX="{Binding Zoom}" 
                         ScaleY="{Binding Zoom}" />
             </TabControl.LayoutTransform>
             <TabItem Header="Home">
-                <StackPanel>
-                    <TextBlock TextWrapping="Wrap">
-                        <Run FontWeight="ExtraBold" FontSize="18">Minecraft Server Administrator</Run>
-                        <LineBreak />
-                        This is our program
-                        <LineBreak />
-                        Looking even better
-                        <LineBreak />
-                        Than before
-                    </TextBlock>
-                </StackPanel>
+                <DockPanel x:Name="HomeDockPanel">
+                    <WPF:ConsoleControl HorizontalAlignment="Right" VerticalAlignment="Top">
+                        <WPF:ConsoleControl.Width>
+                            <MultiBinding Converter="{StaticResource relativeWidthConverter}">
+                                <Binding ElementName="HomeDockPanel" />
+                                <Binding ElementName="HomeDockPanel" Path="ActualWidth" />
+                                <Binding>
+                                    <Binding.Source>
+                                        <System:Double>.75</System:Double>
+                                    </Binding.Source>
+                                </Binding>
+                            </MultiBinding>
+                        </WPF:ConsoleControl.Width>
+                        <WPF:ConsoleControl.Height>
+                            <MultiBinding Converter="{StaticResource relativeHeightConverter}">
+                                <Binding ElementName="HomeDockPanel" />
+                                <Binding ElementName="HomeDockPanel" Path="ActualHeight" />
+                                <Binding>
+                                    <Binding.Source>
+                                        <System:Double>.75</System:Double>
+                                    </Binding.Source>
+                                </Binding>
+                            </MultiBinding>
+                        </WPF:ConsoleControl.Height>
+                    </WPF:ConsoleControl>
+                </DockPanel>
+            </TabItem>
+            <TabItem Header="Config">
+                <Grid Background="#FFE5E5E5"/>
+            </TabItem>
+            <TabItem Header="Logs">
+                <Grid Background="#FFE5E5E5"/>
             </TabItem>
         </TabControl>
         <Fluent:StatusBar HorizontalAlignment="Stretch"
