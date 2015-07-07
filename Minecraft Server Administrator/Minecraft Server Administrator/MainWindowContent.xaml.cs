@@ -1,6 +1,8 @@
 ﻿using Minecraft_Server_Administrator.ViewModels;
+using Minecraft_Server_Administrator.WebService;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,10 +24,12 @@ namespace Minecraft_Server_Administrator
     public partial class MainWindowContent : UserControl
     {
         private readonly MainViewModel viewModel;
+        public static BindingList<string> playerList = new BindingList<string>();
         public MainWindowContent()
         {
             InitializeComponent();
-
+            PlayersListBox.ItemsSource = playerList;
+            Server server = new Server();
             this.viewModel = new MainViewModel();
             this.DataContext = this.viewModel;
         }
