@@ -23,11 +23,13 @@ namespace Minecraft_Server_Administrator
     /// </summary>
     public partial class MainWindowContent : UserControl
     {
+        public static MainWindowContent instance;
         private readonly MainViewModel viewModel;
-        public static BindingList<string> playerList = new BindingList<string>();
+        public SortedSet<string> playerList = new SortedSet<string>();
         public MainWindowContent()
         {
             InitializeComponent();
+            instance = this;
             PlayersListBox.ItemsSource = playerList;
             Server server = new Server();
             this.viewModel = new MainViewModel();
@@ -36,6 +38,10 @@ namespace Minecraft_Server_Administrator
         private void ZoomSlider_OnValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             TextOptions.SetTextFormattingMode(this, e.NewValue > 1.0 ? TextFormattingMode.Ideal : TextFormattingMode.Display);
+        }
+        public void RefreshPlayersListBox()
+        {
+            PlayersListBox.Items.Refresh();
         }
     }
 }

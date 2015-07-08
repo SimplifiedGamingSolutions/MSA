@@ -141,15 +141,7 @@
                             </MultiBinding>
                         </Label.Width>
                     </Label>
-                    <ListBox x:Name="PlayersListBox" Margin="0,20,0,0" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Left">
-                        <ListBox.RenderTransform>
-                            <TransformGroup>
-                                <ScaleTransform ScaleY="-1"/>
-                                <SkewTransform/>
-                                <RotateTransform/>
-                                <TranslateTransform/>
-                            </TransformGroup>
-                        </ListBox.RenderTransform>
+                    <ListBox x:Name="PlayersListBox" Margin="0,20,0,0" HorizontalAlignment="Left">
                         <ListBox.Width>
                             <MultiBinding Converter="{StaticResource relativeWidthConverter}">
                                 <Binding ElementName="HomeDockPanel" />
