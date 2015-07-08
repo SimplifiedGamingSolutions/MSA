@@ -75,7 +75,7 @@
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
     <Reference Include="Technewlogic.WpfDialogManagement">
-      <HintPath>..\..\..\..\..\..\Downloads\WpfDialogManagement\WpfDialogManagement\bin\Debug\Technewlogic.WpfDialogManagement.dll</HintPath>
+      <HintPath>..\packages\Technewlogic.WpfDialogManagement.dll</HintPath>
     </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
