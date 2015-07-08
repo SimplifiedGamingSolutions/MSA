@@ -87,9 +87,9 @@
             <!--Tabs-->
             <Fluent:RibbonTabItem Header="Server">
                 <Fluent:RibbonGroupBox Header="Group">
-                    <Fluent:Button Name="buttonStart" Header="Start" Icon="pack://application:,,,/Minecraft Server Administrator;component/Images/Green.png" LargeIcon="pack://application:,,,/Minecraft Server Administrator;component/Images/GreenLarge.png" />
-                    <Fluent:Button Name="buttonStop" Header="Stop" Icon="pack://application:,,,/Minecraft Server Administrator;component/Images/Gray.png" LargeIcon="pack://application:,,,/Minecraft Server Administrator;component/Images/GrayLarge.png" />
-                    <Fluent:Button Name="buttonRestart" Header="Restart" Icon="pack://application:,,,/Minecraft Server Administrator;component/Images/Gray.png" LargeIcon="pack://application:,,,/Minecraft Server Administrator;component/Images/GrayLarge.png" />
+                    <Fluent:Button Name="buttonStart" Header="Start" Icon="pack://application:,,,/Minecraft Server Administrator;component/Images/Green.png" LargeIcon="pack://application:,,,/Minecraft Server Administrator;component/Images/GreenLarge.png" Click="buttonStart_Click" />
+                    <Fluent:Button Name="buttonStop" Header="Stop" Icon="pack://application:,,,/Minecraft Server Administrator;component/Images/Gray.png" LargeIcon="pack://application:,,,/Minecraft Server Administrator;component/Images/GrayLarge.png" Click="buttonStop_Click" />
+                    <Fluent:Button Name="buttonRestart" Header="Restart" Icon="pack://application:,,,/Minecraft Server Administrator;component/Images/Gray.png" LargeIcon="pack://application:,,,/Minecraft Server Administrator;component/Images/GrayLarge.png" Click="buttonRestart_Click" />
                 </Fluent:RibbonGroupBox>
             </Fluent:RibbonTabItem>
             <Fluent:RibbonTabItem Header="Configuration">

@@ -43,5 +43,18 @@ namespace Minecraft_Server_Administrator
         {
             PlayersListBox.Items.Refresh();
         }
+
+        private void buttonStart_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void buttonStop_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void buttonRestart_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
