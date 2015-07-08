@@ -1,5 +1,5 @@
-﻿using Minecraft_Server_Administrator.ViewModels;
-using Minecraft_Server_Administrator.WebService;
+﻿using Minecraft_Server_Administrator.Server;
+using Minecraft_Server_Administrator.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -25,13 +25,13 @@ namespace Minecraft_Server_Administrator
     {
         public static MainWindowContent instance;
         private readonly MainViewModel viewModel;
-        public SortedSet<string> playerList = new SortedSet<string>();
+        private SortedSet<string> playerList = new SortedSet<string>();
         public MainWindowContent()
         {
             InitializeComponent();
             instance = this;
             PlayersListBox.ItemsSource = playerList;
-            Server server = new Server();
+            WebService webService = new WebService();
             this.viewModel = new MainViewModel();
             this.DataContext = this.viewModel;
         }
@@ -39,13 +39,20 @@ namespace Minecraft_Server_Administrator
         {
             TextOptions.SetTextFormattingMode(this, e.NewValue > 1.0 ? TextFormattingMode.Ideal : TextFormattingMode.Display);
         }
-        public void RefreshPlayersListBox()
+        public void addPlayer(string player)
         {
+            playerList.Add(player);
+            PlayersListBox.Items.Refresh();
+        }
+        public void removePlayer(string player)
+        {
+            playerList.Remove(player);
             PlayersListBox.Items.Refresh();
         }
 
         private void buttonStart_Click(object sender, RoutedEventArgs e)
         {
+            new MinecraftServer(new ServerConfiguration());
         }
 
         private void buttonStop_Click(object sender, RoutedEventArgs e)

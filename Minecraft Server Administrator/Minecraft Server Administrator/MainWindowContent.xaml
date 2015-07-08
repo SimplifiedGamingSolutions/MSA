@@ -154,7 +154,7 @@
                             </MultiBinding>
                         </ListBox.Width>
                     </ListBox>
-                    <WPF:ConsoleControl HorizontalAlignment="Right" VerticalAlignment="Top">
+                    <WPF:ConsoleControl x:Name="Console" HorizontalAlignment="Right" VerticalAlignment="Top">
                         <WPF:ConsoleControl.Width>
                             <MultiBinding Converter="{StaticResource relativeWidthConverter}">
                                 <Binding ElementName="HomeDockPanel" />
