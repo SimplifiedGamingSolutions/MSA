@@ -57,12 +57,12 @@ namespace Minecraft_Server_Administrator
 
         private void buttonStop_Click(object sender, RoutedEventArgs e)
         {
-            Console.WriteOutput("a\na\na\na\n\n\n\n\n\n\n\n\n\n\n\n\n\n\na\n\n\n\n\n\n\n\n\na\n\n\n\n\na\n\n\na", Colors.Black);
+            
         }
 
         private void buttonRestart_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show(Console.inputCommand);
+            
         }
     }
 }

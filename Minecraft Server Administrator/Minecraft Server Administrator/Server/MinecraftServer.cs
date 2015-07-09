@@ -123,7 +123,7 @@ namespace Minecraft_Server_Administrator.Server
         {
             string currentDirectory = Directory.GetCurrentDirectory();
             Directory.SetCurrentDirectory(config.serverDirectory);
-            MainWindowContent.instance.Console.StartProcess(@"C:\Program Files\Java\jdk1.7.0_79\bin\java.exe", "-jar " + config.serverFile);
+            MainWindowContent.instance.Console.StartProcess(@"C:\Program Files\Java\jdk1.7.0_79\bin\java.exe", "-jar " + config.serverFile+" nogui");
             Directory.SetCurrentDirectory(currentDirectory);
 
         }

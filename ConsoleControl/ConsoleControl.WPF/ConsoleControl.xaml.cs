@@ -166,9 +166,9 @@ namespace ConsoleControl.WPF
         public string inputCommand = "";
         private void richTextBoxConsole_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            if(e.Text.Equals("\n"))
+            if(e.Text.Equals("\r"))
             {
-                WriteInput(inputCommand+"\n", Colors.White, false);
+                WriteInput(inputCommand, Colors.White, false);
                 inputCommand = "";
                 inputBegin = false;
             }
@@ -177,9 +177,11 @@ namespace ConsoleControl.WPF
                 if(inputBegin == false)
                 {
                     inputBegin = true;
-                    inputCommand = e.Text;
-                    WriteOutput(e.Text, Colors.White);
+                    inputCommand = "";
                 }
+                inputCommand += e.Text;
+                WriteOutput(e.Text, Colors.White);
+
             }
         }
 
@@ -199,6 +201,7 @@ namespace ConsoleControl.WPF
                 //  Write the output.
                 richTextBoxConsole.Selection.ApplyPropertyValue(TextBlock.ForegroundProperty, new SolidColorBrush(color));
                 richTextBoxConsole.AppendText(output);
+                richTextBoxConsole.CaretPosition = richTextBoxConsole.Document.ContentEnd;
                 if (scrollBarAtBottom())
                 {
                     richTextBoxConsole.ScrollToEnd();
@@ -253,6 +256,7 @@ namespace ConsoleControl.WPF
                 {
                     richTextBoxConsole.Selection.ApplyPropertyValue(TextBlock.ForegroundProperty, new SolidColorBrush(color));
                     richTextBoxConsole.AppendText(input);
+                    richTextBoxConsole.CaretPosition = richTextBoxConsole.Document.ContentEnd;
                     inputStart = richTextBoxConsole.Selection.Start;
                 }
 
@@ -302,7 +306,7 @@ namespace ConsoleControl.WPF
 
             //  If we enable input, make the control not read only.
             if (IsInputEnabled)
-                richTextBoxConsole.IsReadOnly = false;
+                richTextBoxConsole.IsReadOnly = true;
 
             //  We're now running.
             IsProcessRunning = true;
