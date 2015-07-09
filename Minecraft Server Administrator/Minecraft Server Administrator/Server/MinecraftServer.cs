@@ -21,18 +21,18 @@ namespace Minecraft_Server_Administrator.Server
             this.config = config;
             if(config.type == ServerConfiguration.ServerType.Forge)
             {
-                if(!Directory.Exists(config.directory))
+                if(!Directory.Exists(config.serverDirectory))
                 {
                     try
                     {
-                        Directory.CreateDirectory(config.directory);
+                        Directory.CreateDirectory(config.serverDirectory);
                     }
                     catch
                     {
                         return;
                     }
                 }
-                if(!File.Exists(Path.Combine(config.directory, "Forge.jar")))
+                if(!File.Exists(Path.Combine(config.serverDirectory, "Forge.jar")))
                 {
 
                     HtmlWeb hw = new HtmlWeb();
@@ -43,7 +43,7 @@ namespace Minecraft_Server_Administrator.Server
                                   .Where(u => u.Contains("installer.jar"))
                                   .Where(u => !u.Contains("adfoc.us"))
                                   .First();
-                    startDownload(link, config.directory, "ForgeInstaller.jar");
+                    startDownload(link, config.serverDirectory, "ForgeInstaller.jar");
                 }
             }
         }
@@ -61,6 +61,18 @@ namespace Minecraft_Server_Administrator.Server
                 progressDialog.CloseWhenWorkerFinished = true;
                 progressDialog.Show(() => { while (client.IsBusy) { } });
             }
+            Task.Run(() =>
+            {
+                while (progressDialog.Progress != 100)
+                {
+                    Directory.SetCurrentDirectory("Server");
+                    MainWindowContent.instance.Console.StartProcess(@"C:\Program Files\Java\jdk1.7.0_79\bin\java.exe", "-jar " + "ForgeInstaller.jar --installServer");
+                    while (MainWindowContent.instance.Console.IsProcessRunning) { }
+                    File.Delete("ForgeInstaller.jar");
+                    config.serverFile = new DirectoryInfo(Directory.GetCurrentDirectory()).GetFiles(@"forge-*.jar")[0].FullName;
+                    MainWindowContent.instance.Console.StartProcess(@"C:\Program Files\Java\jdk1.7.0_79\bin\java.exe", "-jar " + config.serverFile);
+                }
+            });
         }
         void file_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
         {
@@ -74,7 +86,6 @@ namespace Minecraft_Server_Administrator.Server
             progressDialog.Progress = 100;
             progressDialog.Message = "Complete";
             progressDialog.Close();
-            MainWindowContent.instance.Console.StartProcess(@"C:\Program Files\Java\jdk1.7.0_79\bin\java.exe", "-jar " + Path.Combine(config.directory, "ForgeInstaller.jar") + " --installServer");
         }
     }
 }

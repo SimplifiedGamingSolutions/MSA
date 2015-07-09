@@ -9,13 +9,14 @@ namespace Minecraft_Server_Administrator.Server
     public class ServerConfiguration
     {
         public ServerType type;
-        public string directory;
+        public string serverDirectory;
+        public string serverFile;
         public ServerProperties properties;
 
         public ServerConfiguration()
         {
             type = ServerType.Forge;
-            directory = "Server\\";
+            serverDirectory = "Server\\";
             properties = new ServerProperties();
         }
 
