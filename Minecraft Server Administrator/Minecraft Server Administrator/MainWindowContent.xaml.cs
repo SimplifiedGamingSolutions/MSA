@@ -3,6 +3,7 @@ using Minecraft_Server_Administrator.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -52,7 +53,14 @@ namespace Minecraft_Server_Administrator
 
         private void buttonStart_Click(object sender, RoutedEventArgs e)
         {
-            new MinecraftServer(new ServerConfiguration());
+            if(File.Exists(@"Server\data.msa"))
+            {
+                new MinecraftServer(ServerConfiguration.deserializeFromXML(@"Server\data.msa"));
+            }
+            else
+            {
+                new MinecraftServer(new ServerConfiguration());
+            }
         }
 
         private void buttonStop_Click(object sender, RoutedEventArgs e)

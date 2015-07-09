@@ -33,6 +33,10 @@ namespace Minecraft_Server_Administrator.Server
                     install.Show();
                     return;
                 }
+                else
+                {
+                    startServer();
+                }
             }
         }
 
@@ -98,6 +102,7 @@ namespace Minecraft_Server_Administrator.Server
                     eula.WriteLine("eula=true");
                     eula.Flush();
                     eula.Close();
+                    config.serializeToXML(@"Server\data.msa");
                     startServer();
                 };
 
@@ -125,7 +130,6 @@ namespace Minecraft_Server_Administrator.Server
             Directory.SetCurrentDirectory(config.serverDirectory);
             MainWindowContent.instance.Console.StartProcess(@"C:\Program Files\Java\jdk1.7.0_79\bin\java.exe", "-jar " + config.serverFile+" nogui");
             Directory.SetCurrentDirectory(currentDirectory);
-
         }
     }
 }
