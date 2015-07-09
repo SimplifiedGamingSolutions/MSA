@@ -39,14 +39,6 @@
     <StartupObject>Minecraft_Server_Administrator.App</StartupObject>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ConsoleControl.WPF, Version=1.1.0.0, Culture=neutral, PublicKeyToken=bb812711dbc508e1, processorArchitecture=MSIL">
-      <HintPath>..\packages\ConsoleControl.WPF.1.1.0.0\lib\net40\ConsoleControl.WPF.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="ConsoleControlAPI, Version=1.1.0.0, Culture=neutral, PublicKeyToken=7c86b8a36b9c33e2, processorArchitecture=MSIL">
-      <HintPath>..\packages\ConsoleControl.WPF.1.1.0.0\lib\net40\ConsoleControlAPI.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Fluent, Version=3.4.0.0, Culture=neutral, PublicKeyToken=3e436e32a8c5546f, processorArchitecture=MSIL">
       <HintPath>..\packages\Fluent.Ribbon.3.4.0\lib\net45\Fluent.dll</HintPath>
       <Private>True</Private>
@@ -206,6 +198,12 @@
     <Resource Include="Images\Underline.png" />
     <Resource Include="Images\Yellow.png" />
     <Resource Include="Images\YellowLarge.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\ConsoleControl\ConsoleControl.WPF\ConsoleControl.WPF.csproj">
+      <Project>{fd9ff553-d7c6-45a8-8321-5d9058b38e2d}</Project>
+      <Name>ConsoleControl.WPF</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
