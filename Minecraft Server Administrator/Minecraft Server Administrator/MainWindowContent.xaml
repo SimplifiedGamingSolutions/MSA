@@ -126,59 +126,61 @@
                         ScaleY="{Binding Zoom}" />
             </TabControl.LayoutTransform>
             <TabItem Header="Home">
-                <Grid x:Name="HomeDockPanel">
-                    <Label HorizontalAlignment="Left" VerticalAlignment="Top" Height="25">
-                        Online Players
-                        <Label.Width>
-                            <MultiBinding Converter="{StaticResource relativeWidthConverter}">
-                                <Binding ElementName="HomeDockPanel" />
-                                <Binding ElementName="HomeDockPanel" Path="ActualWidth" />
-                                <Binding>
-                                    <Binding.Source>
-                                        <System:Double>.25</System:Double>
-                                    </Binding.Source>
-                                </Binding>
-                            </MultiBinding>
-                        </Label.Width>
-                    </Label>
-                    <ListBox x:Name="PlayersListBox" Margin="0,20,0,0" HorizontalAlignment="Left">
-                        <ListBox.Width>
-                            <MultiBinding Converter="{StaticResource relativeWidthConverter}">
-                                <Binding ElementName="HomeDockPanel" />
-                                <Binding ElementName="HomeDockPanel" Path="ActualWidth" />
-                                <Binding>
-                                    <Binding.Source>
-                                        <System:Double>.25</System:Double>
-                                    </Binding.Source>
-                                </Binding>
-                            </MultiBinding>
-                        </ListBox.Width>
-                    </ListBox>
-                    <WPF:ConsoleControl x:Name="Console" HorizontalAlignment="Right" VerticalAlignment="Top">
-                        <WPF:ConsoleControl.Width>
-                            <MultiBinding Converter="{StaticResource relativeWidthConverter}">
-                                <Binding ElementName="HomeDockPanel" />
-                                <Binding ElementName="HomeDockPanel" Path="ActualWidth" />
-                                <Binding>
-                                    <Binding.Source>
-                                        <System:Double>.75</System:Double>
-                                    </Binding.Source>
-                                </Binding>
-                            </MultiBinding>
-                        </WPF:ConsoleControl.Width>
-                        <WPF:ConsoleControl.Height>
-                            <MultiBinding Converter="{StaticResource relativeHeightConverter}">
-                                <Binding ElementName="HomeDockPanel" />
-                                <Binding ElementName="HomeDockPanel" Path="ActualHeight" />
-                                <Binding>
-                                    <Binding.Source>
-                                        <System:Double>1</System:Double>
-                                    </Binding.Source>
-                                </Binding>
-                            </MultiBinding>
-                        </WPF:ConsoleControl.Height>
-                    </WPF:ConsoleControl>
-                </Grid>
+                <Border BorderBrush="Black" BorderThickness="1">
+                    <Grid x:Name="HomeDockPanel">
+                        <Label HorizontalAlignment="Left" VerticalAlignment="Top" Height="25">
+                            Online Players
+                            <Label.Width>
+                                <MultiBinding Converter="{StaticResource relativeWidthConverter}">
+                                    <Binding ElementName="HomeDockPanel" />
+                                    <Binding ElementName="HomeDockPanel" Path="ActualWidth" />
+                                    <Binding>
+                                        <Binding.Source>
+                                            <System:Double>.25</System:Double>
+                                        </Binding.Source>
+                                    </Binding>
+                                </MultiBinding>
+                            </Label.Width>
+                        </Label>
+                        <ListBox x:Name="PlayersListBox" Margin="0,20,0,0" HorizontalAlignment="Left">
+                            <ListBox.Width>
+                                <MultiBinding Converter="{StaticResource relativeWidthConverter}">
+                                    <Binding ElementName="HomeDockPanel" />
+                                    <Binding ElementName="HomeDockPanel" Path="ActualWidth" />
+                                    <Binding>
+                                        <Binding.Source>
+                                            <System:Double>.25</System:Double>
+                                        </Binding.Source>
+                                    </Binding>
+                                </MultiBinding>
+                            </ListBox.Width>
+                        </ListBox>
+                        <WPF:ConsoleControl x:Name="Console" HorizontalAlignment="Right" VerticalAlignment="Top">
+                            <WPF:ConsoleControl.Width>
+                                <MultiBinding Converter="{StaticResource relativeWidthConverter}">
+                                    <Binding ElementName="HomeDockPanel" />
+                                    <Binding ElementName="HomeDockPanel" Path="ActualWidth" />
+                                    <Binding>
+                                        <Binding.Source>
+                                            <System:Double>.75</System:Double>
+                                        </Binding.Source>
+                                    </Binding>
+                                </MultiBinding>
+                            </WPF:ConsoleControl.Width>
+                            <WPF:ConsoleControl.Height>
+                                <MultiBinding Converter="{StaticResource relativeHeightConverter}">
+                                    <Binding ElementName="HomeDockPanel" />
+                                    <Binding ElementName="HomeDockPanel" Path="ActualHeight" />
+                                    <Binding>
+                                        <Binding.Source>
+                                            <System:Double>1</System:Double>
+                                        </Binding.Source>
+                                    </Binding>
+                                </MultiBinding>
+                            </WPF:ConsoleControl.Height>
+                        </WPF:ConsoleControl>
+                    </Grid>
+                </Border>
             </TabItem>
             <TabItem Header="Config">
                 <Grid Background="#FFE5E5E5"/>

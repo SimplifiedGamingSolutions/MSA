@@ -15,8 +15,10 @@ namespace Minecraft_Server_Administrator.Server
 {
     public class MinecraftServer
     {
+        public ServerConfiguration config;
         public MinecraftServer(ServerConfiguration config)
         {
+            this.config = config;
             if(config.type == ServerConfiguration.ServerType.Forge)
             {
                 if(!Directory.Exists(config.directory))
@@ -42,7 +44,6 @@ namespace Minecraft_Server_Administrator.Server
                                   .Where(u => !u.Contains("adfoc.us"))
                                   .First();
                     startDownload(link, config.directory, "ForgeInstaller.jar");
-                    MainWindowContent.instance.Console.StartProcess("java", "-jar " + Path.Combine(config.directory, "ForgeInstaller.jar") + " --installServer");
                 }
             }
         }
@@ -59,22 +60,13 @@ namespace Minecraft_Server_Administrator.Server
                 progressDialog = dialogManager.CreateProgressDialog("Downloading forge installer", "Download complete", DialogMode.None);
                 progressDialog.CloseWhenWorkerFinished = true;
                 progressDialog.Show(() => { while (client.IsBusy) { } });
-                while (client.IsBusy) { }
             }
-            /*waitDialog = dialogManager.CreateWaitDialog("installing forge", "Forge install complete", DialogMode.None);
-            waitDialog.CloseWhenWorkerFinished = true;
-            waitDialog.Show(() => {
-                MainWindowContent.instance.Console.StartProcess(destination, "java -jar --installServer");
-
-            });*/
         }
         void file_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
         {
             double bytesIn = double.Parse(e.BytesReceived.ToString());
             double totalBytes = double.Parse(e.TotalBytesToReceive.ToString());
             double percentage = bytesIn / totalBytes * 100;
-            //label2.Text = "Downloaded " + e.BytesReceived + " of " + e.TotalBytesToReceive;
-            //MainWindowContent.instance.progressBar.Value = int.Parse(Math.Truncate(percentage).ToString());
             progressDialog.Progress = int.Parse(Math.Truncate(percentage).ToString());
         }
         void file_DownloadComplete(object sender, AsyncCompletedEventArgs e)
@@ -82,6 +74,7 @@ namespace Minecraft_Server_Administrator.Server
             progressDialog.Progress = 100;
             progressDialog.Message = "Complete";
             progressDialog.Close();
+            MainWindowContent.instance.Console.StartProcess(@"C:\Program Files\Java\jdk1.7.0_79\bin\java.exe", "-jar " + Path.Combine(config.directory, "ForgeInstaller.jar") + " --installServer");
         }
     }
 }
