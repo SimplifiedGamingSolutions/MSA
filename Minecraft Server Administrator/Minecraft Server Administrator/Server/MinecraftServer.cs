@@ -34,34 +34,39 @@ namespace Minecraft_Server_Administrator.Server
                 }
                 if(!File.Exists(Path.Combine(config.serverDirectory, "Forge.jar")))
                 {
-
-                    HtmlWeb hw = new HtmlWeb();
-                    HtmlDocument doc = hw.Load("http://files.minecraftforge.net/maven/net/minecraftforge/forge/");
-                    string link = doc.DocumentNode.Descendants("a")
-                                  .Select(a => a.GetAttributeValue("href", null))
-                                  .Where(u => !String.IsNullOrEmpty(u))
-                                  .Where(u => u.Contains("installer.jar"))
-                                  .Where(u => !u.Contains("adfoc.us"))
-                                  .First();
-                    startDownload(link, config.serverDirectory, "ForgeInstaller.jar");
+                    getForgeInstaller();
                 }
             }
         }
+
+        private void getForgeInstaller()
+        {
+
+            HtmlWeb hw = new HtmlWeb();
+            HtmlDocument doc = hw.Load("http://files.minecraftforge.net/maven/net/minecraftforge/forge/");
+            string link = doc.DocumentNode.Descendants("a")
+                          .Select(a => a.GetAttributeValue("href", null))
+                          .Where(u => !String.IsNullOrEmpty(u))
+                          .Where(u => u.Contains("installer.jar"))
+                          .Where(u => !u.Contains("adfoc.us"))
+                          .First();
+            downloadWithProgressBar(link, config.serverDirectory, "ForgeInstaller.jar");
+        }
         IProgressDialog progressDialog;
         IWaitDialog waitDialog;
-        private void startDownload(string url, string path, string filename)
+        private void downloadWithProgressBar(string url, string destination, string filename)
         {
             using (WebClient client = new WebClient())
             {
                 client.DownloadProgressChanged += new DownloadProgressChangedEventHandler(file_DownloadProgressChanged);
                 client.DownloadFileCompleted += new AsyncCompletedEventHandler(file_DownloadComplete);
-                client.DownloadFileAsync(new Uri(url), Path.Combine(path, "ForgeInstaller.jar"));
+                client.DownloadFileAsync(new Uri(url), Path.Combine(destination, filename));
                 DialogManager dialogManager = new DialogManager(MainWindowContent.instance, MainWindowContent.instance.Dispatcher);
                 progressDialog = dialogManager.CreateProgressDialog("Downloading forge installer", "Download complete", DialogMode.None);
                 progressDialog.CloseWhenWorkerFinished = true;
                 progressDialog.Show(() => { while (client.IsBusy) { } });
             }
-            Task.Run(() =>
+            Task task = Task.Run(() =>
             {
                 while (progressDialog.Progress != 100)
                 {
