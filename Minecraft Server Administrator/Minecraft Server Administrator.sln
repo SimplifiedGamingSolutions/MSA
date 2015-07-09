@@ -14,6 +14,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{280FD7
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSA_Server_Test", "MSA_Server_Test\MSA_Server_Test.csproj", "{FE1EB7CA-4E3E-4404-8DB4-B26A5AB3BCC5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleControl.WPF", "..\ConsoleControl\ConsoleControl.WPF\ConsoleControl.WPF.csproj", "{FD9FF553-D7C6-45A8-8321-5D9058B38E2D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProcessInterface", "..\ConsoleControl\ProcessInterface\ProcessInterface.csproj", "{A4B8573F-EBFC-4140-B8AA-7C037919EF57}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -28,6 +32,14 @@ Global
 		{FE1EB7CA-4E3E-4404-8DB4-B26A5AB3BCC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FE1EB7CA-4E3E-4404-8DB4-B26A5AB3BCC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FE1EB7CA-4E3E-4404-8DB4-B26A5AB3BCC5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FD9FF553-D7C6-45A8-8321-5D9058B38E2D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD9FF553-D7C6-45A8-8321-5D9058B38E2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD9FF553-D7C6-45A8-8321-5D9058B38E2D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD9FF553-D7C6-45A8-8321-5D9058B38E2D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A4B8573F-EBFC-4140-B8AA-7C037919EF57}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A4B8573F-EBFC-4140-B8AA-7C037919EF57}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A4B8573F-EBFC-4140-B8AA-7C037919EF57}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A4B8573F-EBFC-4140-B8AA-7C037919EF57}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
