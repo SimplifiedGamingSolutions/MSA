@@ -376,7 +376,7 @@ namespace ConsoleControl.WPF
         
         public bool ShowDiagnostics
         {
-            get { try { return (bool)GetValue(ShowDiagnosticsProperty); } catch { return false; } }
+            get { try { return (bool)GetValue(ShowDiagnosticsProperty); } catch { return false; } }//$$$ added try catch for stop process crash
           set { SetValue(ShowDiagnosticsProperty, value); }
         }
         
@@ -411,7 +411,7 @@ namespace ConsoleControl.WPF
         public bool IsProcessRunning
         {
             get { return (bool)GetValue(IsProcessRunningProperty); }
-            private set { try { SetValue(IsProcessRunningPropertyKey, value); } catch {  } }
+            private set { try { SetValue(IsProcessRunningPropertyKey, value); } catch {  } } //$$$ added try catch for stop process crash
         }
 
         private static void OnIsProcessRunningChanged(DependencyObject o, DependencyPropertyChangedEventArgs args)
