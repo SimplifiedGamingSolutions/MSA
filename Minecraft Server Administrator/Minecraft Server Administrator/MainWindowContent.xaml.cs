@@ -53,24 +53,33 @@ namespace Minecraft_Server_Administrator
 
         private void buttonStart_Click(object sender, RoutedEventArgs e)
         {
-            if(File.Exists(@"Server\data.msa"))
+            if (MinecraftServer.instance == null)
             {
-                new MinecraftServer(ServerConfiguration.deserializeFromXML(@"Server\data.msa"));
+                if (File.Exists(@"Server\data.msa"))
+                {
+                    new MinecraftServer(ServerConfiguration.deserializeFromXML(@"Server\data.msa"));
+                }
+                else
+                {
+                    new MinecraftServer(new ServerConfiguration());
+                }
             }
             else
             {
-                new MinecraftServer(new ServerConfiguration());
+                MinecraftServer.instance.startServer();
             }
         }
 
         private void buttonStop_Click(object sender, RoutedEventArgs e)
         {
-            
+            Minecraft_Server_Administrator.MainWindowContent.instance.Console.WriteInput("stop", Colors.White, false);
         }
 
         private void buttonRestart_Click(object sender, RoutedEventArgs e)
         {
-            
+            MinecraftServer.instance.stopServer();
+            while (MinecraftServer.instance.isRunning()) { }
+            MinecraftServer.instance.startServer();
         }
     }
 }

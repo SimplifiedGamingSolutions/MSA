@@ -9,6 +9,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media;
 using System.Windows.Threading;
 using Technewlogic.WpfDialogManagement;
 using Technewlogic.WpfDialogManagement.Contracts;
@@ -19,9 +20,11 @@ namespace Minecraft_Server_Administrator.Server
     {
         DialogManager dialogManager = new DialogManager(MainWindowContent.instance, MainWindowContent.instance.Dispatcher);
         public ServerConfiguration config;
+        public static MinecraftServer instance;
 
         public MinecraftServer(ServerConfiguration config)
         {
+            instance = this;
             this.config = config;
             if(config.type == ServerConfiguration.ServerType.Forge)
             {
@@ -124,12 +127,20 @@ namespace Minecraft_Server_Administrator.Server
             }
         }
 
-        private void startServer()
+        public void startServer()
         {
             string currentDirectory = Directory.GetCurrentDirectory();
             Directory.SetCurrentDirectory(config.serverDirectory);
             MainWindowContent.instance.Console.StartProcess(@"C:\Program Files\Java\jdk1.7.0_79\bin\java.exe", "-jar " + config.serverFile+" nogui");
             Directory.SetCurrentDirectory(currentDirectory);
+        }
+        public void stopServer()
+        {
+            MainWindowContent.instance.Console.WriteInput("stop", Colors.White, false);
+        }
+        public bool isRunning()
+        {
+            return MainWindowContent.instance.Console.IsProcessRunning;
         }
     }
 }
