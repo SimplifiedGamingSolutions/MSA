@@ -376,7 +376,7 @@ namespace ConsoleControl.WPF
         
         public bool ShowDiagnostics
         {
-          get { return (bool)GetValue(ShowDiagnosticsProperty); }
+            get { try { return (bool)GetValue(ShowDiagnosticsProperty); } catch { return false; } }
           set { SetValue(ShowDiagnosticsProperty, value); }
         }
         
@@ -411,7 +411,7 @@ namespace ConsoleControl.WPF
         public bool IsProcessRunning
         {
             get { return (bool)GetValue(IsProcessRunningProperty); }
-            private set { SetValue(IsProcessRunningPropertyKey, value); }
+            private set { try { SetValue(IsProcessRunningPropertyKey, value); } catch {  } }
         }
 
         private static void OnIsProcessRunningChanged(DependencyObject o, DependencyPropertyChangedEventArgs args)
