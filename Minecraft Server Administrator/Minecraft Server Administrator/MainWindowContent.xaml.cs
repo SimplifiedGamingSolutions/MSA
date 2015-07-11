@@ -37,7 +37,9 @@ namespace Minecraft_Server_Administrator
             pc = new PlayerCommands();
             this.viewModel = new MainViewModel();
             this.DataContext = this.viewModel;
-            Players.MouseRightButtonUp +=Players_MouseRightButtonUp;
+            Players.MouseRightButtonUp += Players_MouseRightButtonUp;
+            MainWindowContent.instance.buttonStart.IsEnabled = true;
+            MainWindowContent.instance.buttonStop.IsEnabled = false;
         }
 
         private void Players_MouseRightButtonUp(object sender, MouseButtonEventArgs e)

@@ -129,14 +129,25 @@ namespace Minecraft_Server_Administrator.Server
 
         public void startServer()
         {
-            string currentDirectory = Directory.GetCurrentDirectory();
-            Directory.SetCurrentDirectory(config.serverDirectory);
-            MainWindowContent.instance.Console.StartProcess(Path.Combine(Environment.GetEnvironmentVariable("JAVA_HOME"), "bin", "java.exe"), "-jar " + config.serverFile + " nogui");
-            Directory.SetCurrentDirectory(currentDirectory);
+            try
+            {
+                string currentDirectory = Directory.GetCurrentDirectory();
+                Directory.SetCurrentDirectory(config.serverDirectory);
+                MainWindowContent.instance.Console.StartProcess(Path.Combine(Environment.GetEnvironmentVariable("JAVA_HOME"), "bin", "java.exe"), "-jar " + config.serverFile + " nogui");
+                Directory.SetCurrentDirectory(currentDirectory);
+                MainWindowContent.instance.buttonStart.IsEnabled = false;
+                MainWindowContent.instance.buttonStop.IsEnabled = true;
+            }
+            catch
+            {
+
+            }
         }
         public void stopServer()
         {
             MainWindowContent.instance.Console.WriteInput("stop", Colors.White, false);
+            MainWindowContent.instance.buttonStop.IsEnabled = false;
+            MainWindowContent.instance.buttonStart.IsEnabled = true;
         }
         public bool isRunning()
         {
