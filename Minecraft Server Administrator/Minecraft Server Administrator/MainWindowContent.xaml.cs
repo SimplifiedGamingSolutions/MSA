@@ -83,6 +83,11 @@ namespace Minecraft_Server_Administrator
             Minecraft_Server_Administrator.MainWindowContent.instance.Console.WriteInput("stop", Colors.White, false);
         }
 
+        private void buttonWeather_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show(System.IO.Path.Combine(Environment.GetEnvironmentVariable("JAVA_HOME"), "java.exe"));
+        }
+
         private void buttonRestart_Click(object sender, RoutedEventArgs e)
         {
             MinecraftServer.instance.stopServer();
