@@ -127,13 +127,13 @@
             </TabControl.LayoutTransform>
             <TabItem Header="Home">
                 <Border BorderBrush="#FFACACAC" BorderThickness="1">
-                    <Grid x:Name="HomeDockPanel">
+                    <Grid x:Name="HomeGrid">
                         <Label HorizontalAlignment="Left" VerticalAlignment="Top" Height="25">
                             Online Players
                             <Label.Width>
                                 <MultiBinding Converter="{StaticResource relativeWidthConverter}">
-                                    <Binding ElementName="HomeDockPanel" />
-                                    <Binding ElementName="HomeDockPanel" Path="ActualWidth" />
+                                    <Binding ElementName="HomeGrid" />
+                                    <Binding ElementName="HomeGrid" Path="ActualWidth" />
                                     <Binding>
                                         <Binding.Source>
                                             <System:Double>.25</System:Double>
@@ -145,8 +145,8 @@
                         <ListBox x:Name="PlayersListBox" Margin="0,20,0,0" HorizontalAlignment="Left">
                             <ListBox.Width>
                                 <MultiBinding Converter="{StaticResource relativeWidthConverter}">
-                                    <Binding ElementName="HomeDockPanel" />
-                                    <Binding ElementName="HomeDockPanel" Path="ActualWidth" />
+                                    <Binding ElementName="HomeGrid" />
+                                    <Binding ElementName="HomeGrid" Path="ActualWidth" />
                                     <Binding>
                                         <Binding.Source>
                                             <System:Double>.25</System:Double>
@@ -158,8 +158,8 @@
                         <WPF:ConsoleControl x:Name="Console" HorizontalAlignment="Right" VerticalAlignment="Top">
                             <WPF:ConsoleControl.Width>
                                 <MultiBinding Converter="{StaticResource relativeWidthConverter}">
-                                    <Binding ElementName="HomeDockPanel" />
-                                    <Binding ElementName="HomeDockPanel" Path="ActualWidth" />
+                                    <Binding ElementName="HomeGrid" />
+                                    <Binding ElementName="HomeGrid" Path="ActualWidth" />
                                     <Binding>
                                         <Binding.Source>
                                             <System:Double>.75</System:Double>
@@ -169,8 +169,8 @@
                             </WPF:ConsoleControl.Width>
                             <WPF:ConsoleControl.Height>
                                 <MultiBinding Converter="{StaticResource relativeHeightConverter}">
-                                    <Binding ElementName="HomeDockPanel" />
-                                    <Binding ElementName="HomeDockPanel" Path="ActualHeight" />
+                                    <Binding ElementName="HomeGrid" />
+                                    <Binding ElementName="HomeGrid" Path="ActualHeight" />
                                     <Binding>
                                         <Binding.Source>
                                             <System:Double>1</System:Double>
@@ -184,12 +184,14 @@
             </TabItem>
             <TabItem Header="Config">
                 <Border BorderBrush="#FFACACAC" BorderThickness="1">
-                    <Grid x:Name="HomeDockPanel1"/>
+                    <Grid x:Name="ConfigGrid">
+                        <ScrollViewer/>
+                    </Grid>
                 </Border>
             </TabItem>
             <TabItem Header="Logs">
                 <Border BorderBrush="#FFACACAC" BorderThickness="1">
-                    <Grid x:Name="HomeDockPanel2"/>
+                    <Grid x:Name="LogGrid"/>
                 </Border>
             </TabItem>
         </TabControl>
