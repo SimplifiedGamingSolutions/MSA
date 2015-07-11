@@ -81,6 +81,7 @@
     <Compile Include="Commanding\IRelayCommand.cs" />
     <Compile Include="Commanding\RelayCommand.cs" />
     <Compile Include="Converters\Converters.cs" />
+    <Compile Include="Server\PlayerCommands.cs" />
     <Compile Include="Server\MinecraftServer.cs" />
     <Compile Include="Server\ServerConfiguration.cs" />
     <Compile Include="ViewModels\ColorViewModel.cs" />
