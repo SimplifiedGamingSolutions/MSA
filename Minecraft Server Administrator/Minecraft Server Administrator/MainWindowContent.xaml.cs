@@ -26,12 +26,12 @@ namespace Minecraft_Server_Administrator
     {
         public static MainWindowContent instance;
         private readonly MainViewModel viewModel;
-        private SortedSet<string> playerList = new SortedSet<string>();
+        private SortedSet<string> playerList = new SortedSet<string>{"No Players Online"};
         public MainWindowContent()
         {
             InitializeComponent();
             instance = this;
-            PlayersListBox.ItemsSource = playerList;
+            Players.ItemsSource = playerList;
             WebService webService = new WebService();
             this.viewModel = new MainViewModel();
             this.DataContext = this.viewModel;
@@ -42,13 +42,21 @@ namespace Minecraft_Server_Administrator
         }
         public void addPlayer(string player)
         {
+            if (playerList.Contains("No Players Online"))
+            {
+                playerList.Remove("No Players Online");
+            }
             playerList.Add(player);
-            PlayersListBox.Items.Refresh();
+            Players.Items.Refresh();
         }
         public void removePlayer(string player)
         {
             playerList.Remove(player);
-            PlayersListBox.Items.Refresh();
+            if(playerList.Count == 0)
+            {
+                playerList.Add("No Players Online");
+            }
+            Players.Items.Refresh();
         }
 
         private void buttonStart_Click(object sender, RoutedEventArgs e)
