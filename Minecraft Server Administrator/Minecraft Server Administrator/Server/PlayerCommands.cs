@@ -3,21 +3,31 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Windows.Media;
 
 namespace Minecraft_Server_Administrator
 {
     
 
-    class PlayerCommands
+    public class PlayerCommands
     {
         ConsoleControl.WPF.ConsoleControl console = MainWindowContent.instance.Console;
 
-        PlayerCommands(){
-
-
-            console.WriteInput("command", Colors.White, false);
+        public PlayerCommands(){
+            
         }
+
+
+        public void processRightClick(string player)
+        {
+            Console.Write(player);
+        }
+
+
+
+
+
 
 
 
