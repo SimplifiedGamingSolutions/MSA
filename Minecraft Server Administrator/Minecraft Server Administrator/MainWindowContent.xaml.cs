@@ -40,6 +40,7 @@ namespace Minecraft_Server_Administrator
             Players.MouseRightButtonUp += Players_MouseRightButtonUp;
             MainWindowContent.instance.buttonStart.IsEnabled = true;
             MainWindowContent.instance.buttonStop.IsEnabled = false;
+            MainWindowContent.instance.buttonRestart.IsEnabled = false;
         }
 
         private void Players_MouseRightButtonUp(object sender, MouseButtonEventArgs e)

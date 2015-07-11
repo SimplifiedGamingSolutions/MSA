@@ -137,6 +137,7 @@ namespace Minecraft_Server_Administrator.Server
                 Directory.SetCurrentDirectory(currentDirectory);
                 MainWindowContent.instance.buttonStart.IsEnabled = false;
                 MainWindowContent.instance.buttonStop.IsEnabled = true;
+                MainWindowContent.instance.buttonRestart.IsEnabled = true;
             }
             catch
             {
@@ -148,6 +149,7 @@ namespace Minecraft_Server_Administrator.Server
             MainWindowContent.instance.Console.WriteInput("stop", Colors.White, false);
             MainWindowContent.instance.buttonStop.IsEnabled = false;
             MainWindowContent.instance.buttonStart.IsEnabled = true;
+            MainWindowContent.instance.buttonRestart.IsEnabled = false;
         }
         public bool isRunning()
         {
