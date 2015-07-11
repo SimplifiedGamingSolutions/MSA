@@ -42,7 +42,7 @@ namespace Minecraft_Server_Administrator
 
         private void Players_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
         {
-            if ((string)((TreeViewItem)sender).Items.CurrentItem != "No Players Online")
+            //if ((string)((TreeViewItem)sender).Items.CurrentItem != "No Players Online")
                 pc.processRightClick((string)((TreeViewItem)sender).Items.CurrentItem);
         }
         private void ZoomSlider_OnValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)

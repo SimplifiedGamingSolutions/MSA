@@ -82,7 +82,7 @@ namespace Minecraft_Server_Administrator.Server
                         {
                             StartInfo = new ProcessStartInfo
                             {
-                                FileName = Path.Combine(Environment.GetEnvironmentVariable("JAVA_HOME"),"java.exe"),
+                                FileName = Path.Combine(Environment.GetEnvironmentVariable("JAVA_HOME"), "bin","java.exe"),
                                 Arguments = "-jar ForgeInstaller.jar --installServer",
                                 WorkingDirectory = "Server"
                             }
