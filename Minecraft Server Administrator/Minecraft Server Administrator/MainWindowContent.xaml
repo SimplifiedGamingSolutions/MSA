@@ -126,7 +126,7 @@
                         ScaleY="{Binding Zoom}" />
             </TabControl.LayoutTransform>
             <TabItem Header="Home">
-                <Border BorderBrush="Black" BorderThickness="1">
+                <Border BorderBrush="#FFACACAC" BorderThickness="1">
                     <Grid x:Name="HomeDockPanel">
                         <Label HorizontalAlignment="Left" VerticalAlignment="Top" Height="25">
                             Online Players
@@ -183,10 +183,14 @@
                 </Border>
             </TabItem>
             <TabItem Header="Config">
-                <Grid Background="#FFE5E5E5"/>
+                <Border BorderBrush="#FFACACAC" BorderThickness="1">
+                    <Grid x:Name="HomeDockPanel1"/>
+                </Border>
             </TabItem>
             <TabItem Header="Logs">
-                <Grid Background="#FFE5E5E5"/>
+                <Border BorderBrush="#FFACACAC" BorderThickness="1">
+                    <Grid x:Name="HomeDockPanel2"/>
+                </Border>
             </TabItem>
         </TabControl>
         <Fluent:StatusBar HorizontalAlignment="Stretch"
