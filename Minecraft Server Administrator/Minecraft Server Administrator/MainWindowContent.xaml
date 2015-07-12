@@ -201,7 +201,12 @@
                     </Binding>
                 </MultiBinding>
             </TreeView.Width>
-            <TreeViewItem x:Name="Players" Header="Players"/>
+            <TreeViewItem x:Name="Players" Header="Players" IsExpanded="True">
+                
+
+
+
+            </TreeViewItem>
         </TreeView>
     </Grid>
 </UserControl>

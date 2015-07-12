@@ -26,7 +26,7 @@ namespace Minecraft_Server_Administrator
     {
         public static MainWindowContent instance;
         private readonly MainViewModel viewModel;
-        private PlayerCommands pc;
+        private PlayerCommandMenu pc;
         private SortedSet<string> playerList = new SortedSet<string>{"No Players Online"};
         public MainWindowContent()
         {
@@ -34,20 +34,25 @@ namespace Minecraft_Server_Administrator
             instance = this;
             Players.ItemsSource = playerList;
             WebService webService = new WebService();
-            pc = new PlayerCommands();
+            pc = new PlayerCommandMenu();
             this.viewModel = new MainViewModel();
             this.DataContext = this.viewModel;
             Players.MouseRightButtonUp += Players_MouseRightButtonUp;
             MainWindowContent.instance.buttonStart.IsEnabled = true;
             MainWindowContent.instance.buttonStop.IsEnabled = false;
             MainWindowContent.instance.buttonRestart.IsEnabled = false;
+
         }
 
         private void Players_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
         {
-            //if ((string)((TreeViewItem)sender).Items.CurrentItem != "No Players Online")
-                pc.processRightClick((string)((TreeViewItem)sender).Items.CurrentItem);
+            
+            string name = (string)((TreeViewItem)sender).Items.CurrentItem;
+            pc.setName(name);
+            (sender as TreeViewItem).ContextMenu = pc;
         }
+        
+
         private void ZoomSlider_OnValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             TextOptions.SetTextFormattingMode(this, e.NewValue > 1.0 ? TextFormattingMode.Ideal : TextFormattingMode.Display);
