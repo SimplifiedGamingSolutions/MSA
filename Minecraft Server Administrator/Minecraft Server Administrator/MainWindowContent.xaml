@@ -20,6 +20,7 @@
                 <ResourceDictionary Source="pack://application:,,,/Minecraft Server Administrator;component/Images/VectorIcons.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <con:RelativeWidthConverter x:Key="relativeWidthConverter" />
+            <con:RelativeWidthFillerConverter x:Key="relativeWidthFillerConverter" />
             <con:RelativeHeightConverter x:Key="relativeHeightConverter" />
             <con:TabSizeConverter x:Key="tabSizeConverter" />
             <BooleanToVisibilityConverter x:Key="boolToVisibilityConverter" />
@@ -139,14 +140,100 @@
             </TabItem>
             <TabItem Header="Mod Configuration">
                 <Border BorderBrush="#FFACACAC" BorderThickness="1">
-                    <Grid x:Name="gr"/>
+                    <Grid x:Name="ModGrid">
+                        <ScrollViewer x:Name="ModScrollViewer"/>
+                    </Grid>
                 </Border>
             </TabItem>
             <TabItem Header="Server Properties">
                 <Border BorderBrush="#FFACACAC" BorderThickness="1">
-                    <Grid x:Name="ConfigGrid">
-                        <ScrollViewer/>
-                    </Grid>
+                    <ScrollViewer x:Name="ConfigScrollViewer">
+                        <Grid x:Name="ConfigGrid">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <!-- Row 1-->
+                            <WrapPanel x:Name="testGrid" Grid.Row="1" Grid.RowSpan="1" >
+                                <Label x:Name="label1" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Message of the Day" Grid.Row="1" Grid.Column="1"/>
+                                <TextBox Grid.Row="1" Grid.Column="1" VerticalAlignment="Center">
+                                </TextBox>
+                            </WrapPanel>
+                            <!-- Row 2-->
+                            <Label Content="Label" Grid.Row="2"/>
+                            <Label Content="Label" Grid.Row="3"/>
+                            <Label Content="Label" Grid.Row="4"/>
+                            <Label Content="Label" Grid.Row="5"/>
+                            <Label Content="Label" Grid.Row="6"/>
+                            <Label Content="Label" Grid.Row="7"/>
+                            <Label Content="Label" Grid.Row="8"/>
+                            <Label Content="Label" Grid.Row="9"/>
+                            <Label Content="Label" Grid.Row="10"/>
+                            <Label Content="Label" Grid.Row="11"/>
+                            <Label Content="Label" Grid.Row="12"/>
+                            <Label Content="Label" Grid.Row="13"/>
+                            <Label Content="Label" Grid.Row="14"/>
+                            <Label Content="Label" Grid.Row="15"/>
+                            <Label Content="Label" Grid.Row="16"/>
+                            <Label Content="Label" Grid.Row="17"/>
+                            <Label Content="Label" Grid.Row="18"/>
+                            <Label Content="Label" Grid.Row="19"/>
+                            <Label Content="Label" Grid.Row="20"/>
+                            <Label Content="Label" Grid.Row="21"/>
+                            <Label Content="Label" Grid.Row="22"/>
+                            <Label Content="Label" Grid.Row="23"/>
+                            <Label Content="Label" Grid.Row="24"/>
+                            <Label Content="Label" Grid.Row="25"/>
+                            <Label Content="Label" Grid.Row="26"/>
+                            <Label Content="Label" Grid.Row="27"/>
+                            <Label Content="Label" Grid.Row="28"/>
+                            <Label Content="Label" Grid.Row="29"/>
+                            <Label Content="Label" Grid.Row="30"/>
+                            <Label Content="Label" Grid.Row="31"/>
+                            <Label Content="Label" Grid.Row="32"/>
+                            <Label Content="Label" Grid.Row="33"/>
+                            <Label Content="Label" Grid.Row="34"/>
+                            <Label Content="Label" Grid.Row="35"/>
+                            <Label Content="Label" Grid.Row="36"/>
+                        </Grid>
+                    </ScrollViewer>
                 </Border>
             </TabItem>
             <TabItem Header="Logs">
@@ -159,17 +246,9 @@
                           VerticalAlignment="Bottom"						  
                           Visibility="{Binding IsChecked, ElementName=IsStatusBarVisibleCheckBox, Converter={StaticResource boolToVisibilityConverter}}"
                           Grid.Row="2">
-            <Fluent:StatusBarItem Title="Words Width"
-                                  Value="150"
-                                  HorizontalAlignment="Left">
-                <TextBlock Text="150 px" />
+            <Fluent:StatusBarItem Title="Words Width" Value="150" HorizontalAlignment="Left">
+                <TextBlock Text="Status:" />
             </Fluent:StatusBarItem>
-            <Separator HorizontalAlignment="Left" />
-            <Fluent:StatusBarItem Title="Selected Words"
-                                  Value="15"
-                                  ToolTip="This is Selected Words"
-                                  Content="15"
-                                  HorizontalAlignment="Left" />
             <Separator HorizontalAlignment="Left" />
             <Fluent:StatusBarItem Title="Zoom"
                                   HorizontalAlignment="Right"
