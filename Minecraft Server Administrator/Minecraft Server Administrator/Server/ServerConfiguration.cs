@@ -1,13 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
 
 namespace Minecraft_Server_Administrator.Server
 {
     public class ServerConfiguration
     {
+        public static ServerConfiguration instance;
         public ServerType type = ServerType.Forge;
         public string serverDirectory = "Server\\";
         public string serverFile = "";
@@ -15,6 +21,7 @@ namespace Minecraft_Server_Administrator.Server
 
         public ServerConfiguration()
         {
+            instance = this;
             properties = new ServerProperties();
         }
 
@@ -84,5 +91,281 @@ namespace Minecraft_Server_Administrator.Server
             ServerConfiguration config = (ServerConfiguration)reader.Deserialize(file);
             return config;
         }
+
+        internal static void loadProperties()
+        {
+            if(instance == null)
+            {
+                if (File.Exists(@"Server\data.msa"))
+                {
+                    new MinecraftServer(ServerConfiguration.deserializeFromXML(@"Server\data.msa"));
+                }
+                else
+                {
+                    new MinecraftServer(new ServerConfiguration());
+                }
+                createProperties();
+            }
+            else
+            {
+
+            }
+
+
+        }
+
+        private static void createProperties()
+        {
+            FieldInfo[] fields = ServerConfiguration.instance.properties.GetType().GetFields();
+            for (int i = 0; i < fields.Length; i++)
+            {
+                object obj = fields[i].GetValue(ServerConfiguration.instance.properties);
+                if (obj is int)
+                {
+                    createIntProperty(fields[i].Name, (int)obj, i);
+                }
+                else if (obj is string)
+                {
+                    createStringProperty(fields[i].Name, (string)obj, i);
+                }
+                else if (obj is bool)
+                {
+                    createBooleanProperty(fields[i].Name, (bool)obj, i);
+                }
+            }
+            
+        }
+
+        private static void createBooleanProperty(string name, bool value, int row)
+        {
+            MainWindowContent.instance.ConfigGrid.RowDefinitions.Add(new RowDefinition{ Height = GridLength.Auto});
+            Label label = new Label();
+            label.Name = name;
+            label.Content = name;
+            label.Width = 30;
+            label.Height = 30;
+            Grid.SetRow(label, row);
+            Grid.SetColumn(label, 1);
+            MainWindowContent.instance.ConfigGrid.Children.Add(label);
+            ComboBox comboBox = new ComboBox();
+            comboBox.Items.Add(new ComboBoxItem { Content = "False" });
+            comboBox.Items.Add(new ComboBoxItem { Content = "True" });
+            Grid.SetRow(comboBox, row);
+            Grid.SetColumn(comboBox, 2);
+            MainWindowContent.instance.ConfigGrid.Children.Add(comboBox);
+        }
+
+        private static void createStringProperty(string name, string value, int row)
+        {
+            MainWindowContent.instance.ConfigGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+            Label label = new Label();
+            label.Content = name;
+            Grid.SetRow(label, row);
+            label.SetValue(Grid.ColumnProperty, 1);
+            MainWindowContent.instance.ConfigGrid.Children.Add(label);
+            TextBox textBox = new TextBox();
+            textBox.VerticalAlignment = VerticalAlignment.Center;
+            textBox.TextAlignment = TextAlignment.Left;
+            Grid.SetRow(textBox, row);
+            Grid.SetColumn(textBox, 2);
+            MainWindowContent.instance.ConfigGrid.Children.Add(textBox);
+        }
+
+        private static void createIntProperty(string name, int value, int row)
+        {
+            MainWindowContent.instance.ConfigGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+            Label label = new Label();
+            label.Content = name;
+            Grid.SetRow(label, row);
+            Grid.SetColumn(label, 1);
+            MainWindowContent.instance.ConfigGrid.Children.Add(label);
+            //<TextBox Grid.Row="2" Grid.Column="2" VerticalAlignment="Center" TextAlignment="Left" PreviewTextInput="NumericOnly"  DataObject.Pasting="TextBoxPasting" />
+            TextBox textBox = new TextBox();
+            textBox.VerticalAlignment = VerticalAlignment.Center;
+            textBox.TextAlignment = TextAlignment.Left;
+            textBox.PreviewTextInput += NumericOnly;
+            DataObject.AddPastingHandler(textBox, TextBoxPasting);
+            Grid.SetRow(textBox, row);
+            Grid.SetColumn(textBox, 2);
+            MainWindowContent.instance.ConfigGrid.Children.Add(textBox);
+        }
+
+        static void NumericOnly(object sender, System.Windows.Input.TextCompositionEventArgs e)
+        {
+            e.Handled = !IsTextAllowed(e.Text);
+        }
+
+        private static bool IsTextAllowed(string text)
+        {
+            Regex regex = new Regex("[^0-9.-]+"); //regex that matches disallowed text
+            return !regex.IsMatch(text);
+            /*<TextBox Grid.Row="6" Grid.Column="2" VerticalAlignment="Center" TextAlignment="Left" PreviewTextInput="NumericOnly"  DataObject.Pasting="TextBoxPasting" />*/
+        }
+        // Use the DataObject.Pasting Handler 
+        private static void TextBoxPasting(object sender, DataObjectPastingEventArgs e)
+        {
+            if (e.DataObject.GetDataPresent(typeof(String)))
+            {
+                String text = (String)e.DataObject.GetData(typeof(String));
+                if (!IsTextAllowed(text))
+                {
+                    e.CancelCommand();
+                }
+            }
+            else
+            {
+                e.CancelCommand();
+            }
+        }
     }
 }
+/*
+             * 
+                            <!-- Row 1-->
+                            <Label HorizontalAlignment="Left" VerticalAlignment="Top" Content="Message of the Day" Grid.Row="1"/>
+                            <TextBox Grid.Row="1" Grid.Column="2" VerticalAlignment="Center">
+                            </TextBox>
+                            <!-- Row 2-->
+                            <Label Content="Server Port" Grid.Row="2"/>
+                            <TextBox Grid.Row="2" Grid.Column="2" VerticalAlignment="Center" TextAlignment="Left" PreviewTextInput="NumericOnly"  DataObject.Pasting="TextBoxPasting" />
+                            <!-- Row 3-->
+                            <Label Content="Server IP" Grid.Row="3"/>
+                            <TextBox Grid.Row="3" Grid.Column="2" VerticalAlignment="Center" />
+                            <!-- Row 2-->
+                            <Label Content="Level Seed" Grid.Row="4"/>
+                            <TextBox Grid.Row="4" Grid.Column="2" VerticalAlignment="Center" />
+                            <!-- Row 2-->
+                            <Label Content="Level Name" Grid.Row="5"/>
+                            <TextBox Grid.Row="5" Grid.Column="2" VerticalAlignment="Center" />
+                            <!-- Row 2-->
+                            <Label Content="Game Mode" Grid.Row="6"/>
+                            <ComboBox Grid.Row="6" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Column="2">
+                                <ComboBoxItem>0</ComboBoxItem>
+                                <ComboBoxItem>1</ComboBoxItem>
+                            </ComboBox>
+                            <!-- Row 2-->
+                            <Label Content="Force Game Mode" Grid.Row="7"/>
+                            <ComboBox Grid.Row="7" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Column="2">
+                                <ComboBoxItem>False</ComboBoxItem>
+                                <ComboBoxItem>True</ComboBoxItem>
+                            </ComboBox>
+                            <!-- Row 8-->
+                            <Label Content="Allow Nether" Grid.Row="8"/>
+                            <ComboBox Grid.Row="8" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Column="2">
+                                <ComboBoxItem>False</ComboBoxItem>
+                                <ComboBoxItem>True</ComboBoxItem>
+                            </ComboBox>
+                            <!-- Row 9-->
+                            <Label Content="Difficulty" Grid.Row="9"/>
+                            <ComboBox Grid.Row="9" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Column="2">
+                                <ComboBoxItem>0</ComboBoxItem>
+                                <ComboBoxItem>1</ComboBoxItem>
+                            </ComboBox>
+                            <!-- Row 2-->
+                            <Label Content="Spawn Monsters" Grid.Row="10"/>
+                            <ComboBox Grid.Row="10" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Column="2">
+                                <ComboBoxItem>False</ComboBoxItem>
+                                <ComboBoxItem>True</ComboBoxItem>
+                            </ComboBox>
+                            <!-- Row 9-->
+                            <Label Content="Spawn Animals" Grid.Row="11"/>
+                            <ComboBox Grid.Row="11" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Column="2">
+                                <ComboBoxItem>False</ComboBoxItem>
+                                <ComboBoxItem>True</ComboBoxItem>
+                            </ComboBox>
+                            <!-- Row 9-->
+                            <Label Content="Spawn NPCs" Grid.Row="12"/>
+                            <ComboBox Grid.Row="12" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Column="2">
+                                <ComboBoxItem>False</ComboBoxItem>
+                                <ComboBoxItem>True</ComboBoxItem>
+                            </ComboBox>
+                            <!-- Row 9-->
+                            <Label Content="Generate Structures" Grid.Row="13"/>
+                            <ComboBox Grid.Row="13" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Column="2">
+                                <ComboBoxItem>False</ComboBoxItem>
+                                <ComboBoxItem>True</ComboBoxItem>
+                            </ComboBox>
+                            <!-- Row 9-->
+                            <Label Content="Spawn Protection Radius" Grid.Row="14"/>
+                            <TextBox Grid.Row="14" Grid.Column="2" VerticalAlignment="Center" TextAlignment="Left" PreviewTextInput="NumericOnly"  DataObject.Pasting="TextBoxPasting" />
+                            <!-- Row 3-->
+                            <Label Content="Max Tick Time" Grid.Row="15"/>
+                            <TextBox Grid.Row="15" Grid.Column="2" VerticalAlignment="Center" TextAlignment="Left" PreviewTextInput="NumericOnly"  DataObject.Pasting="TextBoxPasting" />
+                            <!-- Row 3-->
+                            <Label Content="Enable Query" Grid.Row="16"/>
+                            <ComboBox Grid.Row="16" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Column="2">
+                                <ComboBoxItem>False</ComboBoxItem>
+                                <ComboBoxItem>True</ComboBoxItem>
+                            </ComboBox>
+                            <!-- Row 8-->
+                            <Label Content="Player Idle Time-Out" Grid.Row="17"/>
+                            <TextBox Grid.Row="17" Grid.Column="2" VerticalAlignment="Center" TextAlignment="Left" PreviewTextInput="NumericOnly"  DataObject.Pasting="TextBoxPasting" />
+                            <!-- Row 3-->
+                            <Label Content="Op Permission Level" Grid.Row="18"/>
+                            <TextBox Grid.Row="18" Grid.Column="2" VerticalAlignment="Center" TextAlignment="Left" PreviewTextInput="NumericOnly"  DataObject.Pasting="TextBoxPasting" />
+                            <!-- Row 3-->
+                            <Label Content="Resource Pack Hash" Grid.Row="19"/>
+                            <TextBox Grid.Row="19" Grid.Column="2" VerticalAlignment="Center" />
+                            <!-- Row 2-->
+                            <Label Content="Announce Player Achievements" Grid.Row="20"/>
+                            <ComboBox Grid.Row="20" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Column="2">
+                                <ComboBoxItem>False</ComboBoxItem>
+                                <ComboBoxItem>True</ComboBoxItem>
+                            </ComboBox>
+                            <!-- Row 8-->
+                            <Label Content="Snooper Enabled" Grid.Row="21"/>
+                            <ComboBox Grid.Row="21" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Column="2">
+                                <ComboBoxItem>False</ComboBoxItem>
+                                <ComboBoxItem>True</ComboBoxItem>
+                            </ComboBox>
+                            <!-- Row 8-->
+                            <Label Content="Level Type" Grid.Row="22"/>
+                            <TextBox Grid.Row="22" Grid.Column="2" VerticalAlignment="Center" />
+                            <!-- Row 2-->
+                            <Label Content="Hardcore" Grid.Row="23"/>
+                            <ComboBox Grid.Row="23" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Column="2">
+                                <ComboBoxItem>False</ComboBoxItem>
+                                <ComboBoxItem>True</ComboBoxItem>
+                            </ComboBox>
+                            <!-- Row 8-->
+                            <Label Content="Enable Command Block" Grid.Row="24"/>
+                            <ComboBox Grid.Row="24" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Column="2">
+                                <ComboBoxItem>False</ComboBoxItem>
+                                <ComboBoxItem>True</ComboBoxItem>
+                            </ComboBox>
+                            <!-- Row 8-->
+                            <Label Content="Max Players" Grid.Row="25"/>
+                            <TextBox Grid.Row="25" Grid.Column="2" VerticalAlignment="Center" TextAlignment="Left" PreviewTextInput="NumericOnly"  DataObject.Pasting="TextBoxPasting" />
+                            <!-- Row 3-->
+                            <Label Content="Network Compression Threshold" Grid.Row="26"/>
+                            <TextBox Grid.Row="26" Grid.Column="2" VerticalAlignment="Center" TextAlignment="Left" PreviewTextInput="NumericOnly"  DataObject.Pasting="TextBoxPasting" />
+                            <!-- Row 3-->
+                            <Label Content="Max World Size" Grid.Row="27"/>
+                            <TextBox Grid.Row="27" Grid.Column="2" VerticalAlignment="Center" TextAlignment="Left" PreviewTextInput="NumericOnly"  DataObject.Pasting="TextBoxPasting" />
+                            <!-- Row 3-->
+                            <Label Content="Allow Flight" Grid.Row="28"/>
+                            <ComboBox Grid.Row="28" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Column="2">
+                                <ComboBoxItem>False</ComboBoxItem>
+                                <ComboBoxItem>True</ComboBoxItem>
+                            </ComboBox>
+                            <Label Content="View Distance" Grid.Row="29"/>
+                            <TextBox Grid.Row="29" Grid.Column="2" VerticalAlignment="Center" TextAlignment="Left" PreviewTextInput="NumericOnly"  DataObject.Pasting="TextBoxPasting" />
+                            <!-- Row 3-->
+                            <Label Content="Resource Pack" Grid.Row="30"/>
+                            <TextBox Grid.Row="30" Grid.Column="2" VerticalAlignment="Center" />
+                            <!-- Row 2-->
+                            <Label Content="Online Mode" Grid.Row="31"/>
+                            <ComboBox Grid.Row="31" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Column="2">
+                                <ComboBoxItem>False</ComboBoxItem>
+                                <ComboBoxItem>True</ComboBoxItem>
+                            </ComboBox>
+                            <!-- Row 8-->
+                            <Label Content="Max Build Height" Grid.Row="32"/>
+                            <TextBox Grid.Row="32" Grid.Column="2" VerticalAlignment="Center" TextAlignment="Left" PreviewTextInput="NumericOnly"  DataObject.Pasting="TextBoxPasting" />
+                            <!-- Row 3-->
+                            <Label Content="Enable Rcon" Grid.Row="33"/>
+                            <ComboBox Grid.Row="33" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Column="2">
+                                <ComboBoxItem>False</ComboBoxItem>
+                                <ComboBoxItem>True</ComboBoxItem>
+                            </ComboBox>
+             */

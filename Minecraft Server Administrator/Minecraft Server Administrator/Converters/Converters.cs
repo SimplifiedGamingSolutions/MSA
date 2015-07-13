@@ -43,27 +43,6 @@ namespace Minecraft_Server_Administrator.Converters
         }
     }
 
-    public class RelativeWidthFillerConverter : IMultiValueConverter
-    {
-        public object Convert(object[] values, Type targetType, object parameter,
-            System.Globalization.CultureInfo culture)
-        {
-            Grid grid = values[0] as Grid;
-            grid.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
-            double gridWidth = grid.DesiredSize.Width;
-            Label label = values[1] as Label;
-            label.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
-            double labelWidth = label.DesiredSize.Width;
-            return gridWidth - labelWidth;
-        }
-
-        public object[] ConvertBack(object value, Type[] targetTypes, object parameter,
-            System.Globalization.CultureInfo culture)
-        {
-            throw new NotSupportedException();
-        }
-    }
-
     public class RelativeHeightConverter : IMultiValueConverter
     {
         public object Convert(object[] values, Type targetType, object parameter,

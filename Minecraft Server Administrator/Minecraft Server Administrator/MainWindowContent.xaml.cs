@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -38,10 +39,19 @@ namespace Minecraft_Server_Administrator
             this.viewModel = new MainViewModel();
             this.DataContext = this.viewModel;
             Players.MouseRightButtonUp += Players_MouseRightButtonUp;
+            MainTabControl.SelectionChanged += MainTabControl_SelectionChanged;
             MainWindowContent.instance.buttonStart.IsEnabled = true;
             MainWindowContent.instance.buttonStop.IsEnabled = false;
             MainWindowContent.instance.buttonRestart.IsEnabled = false;
 
+        }
+
+        void MainTabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if(ServerPropertiesTab.IsSelected)
+            {
+                ServerConfiguration.loadProperties();
+            }
         }
 
         private void Players_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
@@ -51,7 +61,8 @@ namespace Minecraft_Server_Administrator
             pc.setName(name);
             (sender as TreeViewItem).ContextMenu = pc;
         }
-        
+
+
 
         private void ZoomSlider_OnValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
@@ -89,11 +100,10 @@ namespace Minecraft_Server_Administrator
                     new MinecraftServer(new ServerConfiguration());
                 }
             }
-            else
-            {
-                MinecraftServer.instance.startServer();
-            }
+            MinecraftServer.instance.startServer();
         }
+
+        
 
         private void buttonStop_Click(object sender, RoutedEventArgs e)
         {

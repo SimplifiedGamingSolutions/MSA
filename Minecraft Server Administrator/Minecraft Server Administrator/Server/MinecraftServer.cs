@@ -36,10 +36,6 @@ namespace Minecraft_Server_Administrator.Server
                     install.Show();
                     return;
                 }
-                else
-                {
-                    startServer();
-                }
             }
         }
 
