@@ -140,18 +140,15 @@ namespace Minecraft_Server_Administrator.Server
         {
             MainWindowContent.instance.ConfigGrid.RowDefinitions.Add(new RowDefinition{ Height = GridLength.Auto});
             Label label = new Label();
-            label.Name = name;
             label.Content = name;
-            label.Width = 30;
-            label.Height = 30;
             Grid.SetRow(label, row);
-            Grid.SetColumn(label, 1);
+            Grid.SetColumn(label, 0);
             MainWindowContent.instance.ConfigGrid.Children.Add(label);
             ComboBox comboBox = new ComboBox();
             comboBox.Items.Add(new ComboBoxItem { Content = "False" });
             comboBox.Items.Add(new ComboBoxItem { Content = "True" });
             Grid.SetRow(comboBox, row);
-            Grid.SetColumn(comboBox, 2);
+            Grid.SetColumn(comboBox, 1);
             MainWindowContent.instance.ConfigGrid.Children.Add(comboBox);
         }
 
@@ -161,13 +158,13 @@ namespace Minecraft_Server_Administrator.Server
             Label label = new Label();
             label.Content = name;
             Grid.SetRow(label, row);
-            label.SetValue(Grid.ColumnProperty, 1);
+            Grid.SetColumn(label, 0);
             MainWindowContent.instance.ConfigGrid.Children.Add(label);
             TextBox textBox = new TextBox();
             textBox.VerticalAlignment = VerticalAlignment.Center;
             textBox.TextAlignment = TextAlignment.Left;
             Grid.SetRow(textBox, row);
-            Grid.SetColumn(textBox, 2);
+            Grid.SetColumn(textBox, 1);
             MainWindowContent.instance.ConfigGrid.Children.Add(textBox);
         }
 
@@ -177,7 +174,7 @@ namespace Minecraft_Server_Administrator.Server
             Label label = new Label();
             label.Content = name;
             Grid.SetRow(label, row);
-            Grid.SetColumn(label, 1);
+            Grid.SetColumn(label, 0);
             MainWindowContent.instance.ConfigGrid.Children.Add(label);
             //<TextBox Grid.Row="2" Grid.Column="2" VerticalAlignment="Center" TextAlignment="Left" PreviewTextInput="NumericOnly"  DataObject.Pasting="TextBoxPasting" />
             TextBox textBox = new TextBox();
@@ -186,7 +183,7 @@ namespace Minecraft_Server_Administrator.Server
             textBox.PreviewTextInput += NumericOnly;
             DataObject.AddPastingHandler(textBox, TextBoxPasting);
             Grid.SetRow(textBox, row);
-            Grid.SetColumn(textBox, 2);
+            Grid.SetColumn(textBox, 1);
             MainWindowContent.instance.ConfigGrid.Children.Add(textBox);
         }
 

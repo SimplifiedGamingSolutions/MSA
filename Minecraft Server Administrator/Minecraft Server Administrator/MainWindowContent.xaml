@@ -149,7 +149,7 @@
                     <ScrollViewer x:Name="ConfigScrollViewer">
                         <Grid x:Name="ConfigGrid">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                         </Grid>

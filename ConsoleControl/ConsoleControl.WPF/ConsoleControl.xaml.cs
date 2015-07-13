@@ -29,7 +29,7 @@ namespace ConsoleControl.WPF
 
             //  Wait for key down messages on the rich text box.
             richTextBoxConsole.KeyDown += new KeyEventHandler(richTextBoxConsole_KeyDown);
-            //richTextBoxConsole.PreviewKeyDown += new KeyEventHandler(richTextBoxConsole_KeyDownInput);
+            richTextBoxConsole.PreviewKeyDown += new KeyEventHandler(richTextBoxConsole_KeyDownInput);
             richTextBoxConsole.PreviewTextInput += richTextBoxConsole_PreviewTextInput;
             richTextBoxConsole.IsReadOnly = true;
             richTextBoxConsole.IsReadOnlyCaretVisible = true;
@@ -138,28 +138,10 @@ namespace ConsoleControl.WPF
         void richTextBoxConsole_KeyDownInput(object sender, KeyEventArgs e)
         {
             
-            if (e.Key != Key.Return)
+            if (e.Key == Key.Space)
             {
-                if (inputBegin == false)
-                {
-                    WriteOutput("\n", Colors.White); 
-                    richTextBoxConsole.CaretPosition = richTextBoxConsole.Document.ContentEnd;
-                    richTextBoxConsole.ScrollToEnd();
-                    inputBegin = true;
-                    inputCommand = e.Key.ToString();
-                }
-                else
-                {
-
-                    inputCommand += e.Key.ToString();
-                }
-            }
-            else if (e.Key == Key.Return)
-            {
-                WriteInput(inputCommand.ToLower(), Colors.White, false);
-                inputCommand = "";
-                inputBegin = false;
-                //e.Handled = true;
+                inputCommand += " ";
+                WriteOutput(" ", Colors.White);
             }
         }
         public bool inputBegin = false;

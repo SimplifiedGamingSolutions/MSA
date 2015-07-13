@@ -22,6 +22,7 @@ namespace Minecraft_Server_Administrator
         string name;
 
         public PlayerCommandMenu(){
+            console = MainWindowContent.instance.Console;
             this.name = "";
             
 
@@ -44,7 +45,7 @@ namespace Minecraft_Server_Administrator
             IMessageDialog achievmentWindow = dialogManager.CreateMessageDialog("hello there \"" + name+"\"",DialogMode.Ok);
 
            // achievmentWindow.No = () => { MainWindowContent.instance.Console.WriteInput("kill conterio36", Colors.White, false); };
-            achievmentWindow.No = () => { console.WriteInput("kill conterio36", Colors.White, false); };
+            achievmentWindow.Ok = () => { console.WriteInput("kill menoshin", Colors.White, false); };
 
             achievmentWindow.Show();
 
