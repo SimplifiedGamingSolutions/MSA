@@ -105,11 +105,12 @@ namespace ConsoleControl.WPF
         ///
         void richTextBoxConsole_KeyDown(object sender, KeyEventArgs e)
         {
+            richTextBoxConsole.IsReadOnly = true;
             bool inReadOnlyZone = richTextBoxConsole.Selection.Start.CompareTo(inputStart) < 0;
 
             //  If we're at the input point and it's backspace, bail.
             if (inReadOnlyZone && e.Key == Key.Back)
-                e.Handled = true;;
+                e.Handled = true;
 
             //  Are we in the read-only zone?
             if (inReadOnlyZone)
@@ -127,6 +128,7 @@ namespace ConsoleControl.WPF
             //  Is it the return key?
             if (e.Key == Key.Return)
             {
+                richTextBoxConsole.IsReadOnly = true;
                 //  Get the input.
                 //todo
                 //string input = new TextRange(inputStart, (richTextBoxConsole.Selection.Start.) - inputStart);
@@ -137,17 +139,24 @@ namespace ConsoleControl.WPF
         }
         void richTextBoxConsole_KeyDownInput(object sender, KeyEventArgs e)
         {
+            richTextBoxConsole.IsReadOnly = true;
             
             if (e.Key == Key.Space)
             {
                 inputCommand += " ";
                 WriteOutput(" ", Colors.White);
             }
+            else if (e.Key == Key.Back)
+            {
+                richTextBoxConsole.IsReadOnly = false;
+                inputCommand.Substring(0,inputCommand.Length-1);
+            }
         }
         public bool inputBegin = false;
         public string inputCommand = "";
         private void richTextBoxConsole_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
+            richTextBoxConsole.IsReadOnly = true;
             if(e.Text.Equals("\r"))
             {
                 WriteInput(inputCommand, Colors.White, false);
@@ -174,6 +183,7 @@ namespace ConsoleControl.WPF
         /// <param name="color">The color.</param>
         public void WriteOutput(string output, Color color)
         {
+            richTextBoxConsole.IsReadOnly = true;
             if (string.IsNullOrEmpty(lastInput) == false &&
                 (output == lastInput || output.Replace("\r\n", "") == lastInput))
                 return;

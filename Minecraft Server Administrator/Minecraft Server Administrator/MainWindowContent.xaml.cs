@@ -43,6 +43,7 @@ namespace Minecraft_Server_Administrator
             MainWindowContent.instance.buttonStart.IsEnabled = true;
             MainWindowContent.instance.buttonStop.IsEnabled = false;
             MainWindowContent.instance.buttonRestart.IsEnabled = false;
+            Console.IsInputEnabled = true;
 
         }
 
