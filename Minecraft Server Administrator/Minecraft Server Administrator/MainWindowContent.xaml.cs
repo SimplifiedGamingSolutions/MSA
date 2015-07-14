@@ -78,7 +78,7 @@ namespace Minecraft_Server_Administrator
         {
             if(ServerPropertiesTab.IsSelected)
             {
-                ServerConfiguration.loadProperties();
+                ServerConfiguration.loadConfig();
             }
         }
 

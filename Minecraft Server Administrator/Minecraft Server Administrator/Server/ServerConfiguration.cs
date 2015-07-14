@@ -75,6 +75,32 @@ namespace Minecraft_Server_Administrator.Server
             public ServerProperties()
             {
             }
+
+            public ServerProperties(string path)
+            {
+                StreamReader reader = File.OpenText(path);
+                string line;
+                while ((line = reader.ReadLine()) != null)
+                {
+                    string[] items = line.Split('=');
+                    if (items.Length.Equals(2) && !items[0].Contains("#"))
+                    {
+                        FieldInfo field = this.GetType().GetField(items[0].Replace('-','_'));
+                        if (field.GetValue(this) is int)
+                        {
+                            field.SetValue(this, int.Parse(items[1]));
+                        }
+                        else if (field.GetValue(this) is string)
+                        {
+                            field.SetValue(this, items[1]);
+                        }
+                        else if (field.GetValue(this) is bool)
+                        {
+                            field.SetValue(this, bool.Parse(items[1]));
+                        }
+                    }
+                }
+            }
         }
 
         public void serializeToXML(string destination)
@@ -92,7 +118,7 @@ namespace Minecraft_Server_Administrator.Server
             return config;
         }
 
-        internal static void loadProperties()
+        internal static void loadConfig()
         {
             if(instance == null)
             {
@@ -104,6 +130,7 @@ namespace Minecraft_Server_Administrator.Server
                 {
                     new MinecraftServer(new ServerConfiguration());
                 }
+                loadProperties(@"Server\server.properties");
                 createProperties();
             }
             else
@@ -112,6 +139,11 @@ namespace Minecraft_Server_Administrator.Server
             }
 
 
+        }
+
+        private static void loadProperties(string path)
+        {
+            ServerProperties props = new ServerProperties(path);
         }
 
         private static void createProperties()
@@ -147,6 +179,10 @@ namespace Minecraft_Server_Administrator.Server
             ComboBox comboBox = new ComboBox();
             comboBox.Items.Add(new ComboBoxItem { Content = "False" });
             comboBox.Items.Add(new ComboBoxItem { Content = "True" });
+            if (!value)
+                comboBox.SelectedIndex = 0;
+            else
+                comboBox.SelectedIndex = 1;
             Grid.SetRow(comboBox, row);
             Grid.SetColumn(comboBox, 1);
             MainWindowContent.instance.ConfigGrid.Children.Add(comboBox);
@@ -163,6 +199,7 @@ namespace Minecraft_Server_Administrator.Server
             TextBox textBox = new TextBox();
             textBox.VerticalAlignment = VerticalAlignment.Center;
             textBox.TextAlignment = TextAlignment.Left;
+            textBox.Text = value;
             Grid.SetRow(textBox, row);
             Grid.SetColumn(textBox, 1);
             MainWindowContent.instance.ConfigGrid.Children.Add(textBox);
@@ -181,6 +218,7 @@ namespace Minecraft_Server_Administrator.Server
             textBox.VerticalAlignment = VerticalAlignment.Center;
             textBox.TextAlignment = TextAlignment.Left;
             textBox.PreviewTextInput += NumericOnly;
+            textBox.Text = value.ToString();
             DataObject.AddPastingHandler(textBox, TextBoxPasting);
             Grid.SetRow(textBox, row);
             Grid.SetColumn(textBox, 1);
