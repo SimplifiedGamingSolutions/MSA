@@ -9,6 +9,7 @@ using System.Runtime.InteropServices;
 using System.Windows.Interop;
 using System.ComponentModel;
 using System.Windows.Controls.Primitives;
+using System.Collections.Generic;
 
 namespace ConsoleControl.WPF
 {
@@ -20,7 +21,6 @@ namespace ConsoleControl.WPF
         public ConsoleControl()
         {
             InitializeComponent();
-            
             //  Handle process events.
             processInterace.OnProcessOutput += new ProcessInterface.ProcessEventHanlder(processInterace_OnProcessOutput);
             processInterace.OnProcessError += processInterace_OnProcessError;
@@ -193,6 +193,7 @@ namespace ConsoleControl.WPF
                 //  Write the output.
                 richTextBoxConsole.Selection.ApplyPropertyValue(TextBlock.ForegroundProperty, new SolidColorBrush(color));
                 richTextBoxConsole.AppendText(output);
+                triggerLogChanged(output);
                 richTextBoxConsole.CaretPosition = richTextBoxConsole.Document.ContentEnd;
                 if (scrollBarAtBottom())
                 {
@@ -200,6 +201,19 @@ namespace ConsoleControl.WPF
                 }
                 inputStart = richTextBoxConsole.Selection.Start;
             }));
+        }
+
+        public delegate void LogChangedEventHandler(string output);
+
+        public event LogChangedEventHandler LogChangedEvent;
+
+        public void triggerLogChanged(string output)
+        {
+            // Your logic
+            if (LogChangedEvent != null)
+            {
+                LogChangedEvent(output);
+            }
         }
         //SCROLL BAR STUFF
         public bool scrollBarAtBottom()

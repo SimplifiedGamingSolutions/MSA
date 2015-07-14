@@ -120,9 +120,9 @@ namespace Minecraft_Server_Administrator.Server
 
         internal static void loadConfig()
         {
+            MinecraftServer server;
             if(instance == null)
             {
-                MinecraftServer server;
                 if (File.Exists(@"Server\data.msa"))
                 {
                     server = new MinecraftServer(ServerConfiguration.deserializeFromXML(@"Server\data.msa"));
@@ -136,7 +136,8 @@ namespace Minecraft_Server_Administrator.Server
             }
             else
             {
-
+                loadProperties(instance, @"Server\server.properties");
+                createProperties();
             }
 
 
@@ -149,6 +150,7 @@ namespace Minecraft_Server_Administrator.Server
 
         private static void createProperties()
         {
+            MainWindowContent.instance.ConfigGrid.Children.Clear();
             FieldInfo[] fields = ServerConfiguration.instance.properties.GetType().GetFields();
             for (int i = 0; i < fields.Length; i++)
             {

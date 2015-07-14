@@ -3,6 +3,7 @@ using Minecraft_Server_Administrator.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -43,11 +44,29 @@ namespace Minecraft_Server_Administrator
             MainTabControl.SelectionChanged += MainTabControl_SelectionChanged;
             commandTextBox.IsUndoEnabled = true;
             commandTextBox.KeyUp += commandTextBox_KeyUp;
+            Console.LogChangedEvent += Console_LogChangedEvent;
             MainWindowContent.instance.buttonStart.IsEnabled = true;
             MainWindowContent.instance.buttonStop.IsEnabled = false;
             MainWindowContent.instance.buttonRestart.IsEnabled = false;
             Console.IsInputEnabled = true;
 
+        }
+
+        void Console_LogChangedEvent(string output)
+        {
+            allLog.AppendText(output);
+            if (output.Contains("ERROR") || output.Contains("WARN"))
+            {
+                errorLog.AppendText(output);
+            }
+            else if(!output.Contains("CHAT"))
+            {
+                serverLog.AppendText(output);
+            }
+            else if(output.Contains("CHAT"))
+            {
+                chatLog.AppendText(output);
+            }
         }
         private int currentHistory = 0;
         void commandTextBox_KeyUp(object sender, KeyEventArgs e)

@@ -163,7 +163,51 @@
             </TabItem>
             <TabItem Header="Logs">
                 <Border BorderBrush="#FFACACAC" BorderThickness="1">
-                    <Grid x:Name="LogGrid"/>
+                    <TabControl Name="logTabControl" TabStripPlacement="Bottom">
+                        <TabControl.Width>
+                            <MultiBinding Converter="{StaticResource relativeWidthConverter}">
+                                <Binding ElementName="MainGrid" />
+                                <Binding ElementName="MainGrid" Path="ActualWidth" />
+                                <Binding>
+                                    <Binding.Source>
+                                        <System:Double>.75</System:Double>
+                                    </Binding.Source>
+                                </Binding>
+                            </MultiBinding>
+                        </TabControl.Width>
+                        <TabControl.LayoutTransform>
+                            <ScaleTransform ScaleX="{Binding Zoom}" 
+                        ScaleY="{Binding Zoom}" />
+                        </TabControl.LayoutTransform>
+                        <TabItem Header="All">
+                            <Grid Background="#FFE5E5E5">
+                                <RichTextBox Name="allLog">
+                                    
+                                </RichTextBox>
+                            </Grid>
+                        </TabItem>
+                        <TabItem Header="Error">
+                            <Grid Background="#FFE5E5E5">
+                                <RichTextBox Name="errorLog">
+
+                                </RichTextBox>
+                            </Grid>
+                        </TabItem>
+                        <TabItem Header="Server">
+                            <Grid Background="#FFE5E5E5">
+                                <RichTextBox Name="serverLog">
+
+                                </RichTextBox>
+                            </Grid>
+                        </TabItem>
+                        <TabItem Header="Chat">
+                            <Grid Background="#FFE5E5E5">
+                                <RichTextBox Name="chatLog">
+
+                                </RichTextBox>
+                            </Grid>
+                        </TabItem>
+                    </TabControl>
                 </Border>
             </TabItem>
         </TabControl>
