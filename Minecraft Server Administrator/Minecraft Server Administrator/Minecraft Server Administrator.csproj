@@ -84,6 +84,7 @@
     <Compile Include="Server\PlayerCommands.cs" />
     <Compile Include="Server\MinecraftServer.cs" />
     <Compile Include="Server\ServerConfiguration.cs" />
+    <Compile Include="Server\ServerProperties.cs" />
     <Compile Include="ViewModels\ColorViewModel.cs" />
     <Compile Include="ViewModels\FontsViewModel.cs" />
     <Compile Include="ViewModels\GalleryItemViewModel.cs" />

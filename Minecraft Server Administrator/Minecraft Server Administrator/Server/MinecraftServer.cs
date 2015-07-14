@@ -1,4 +1,5 @@
 ﻿using HtmlAgilityPack;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -6,6 +7,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -18,35 +20,61 @@ namespace Minecraft_Server_Administrator.Server
 {
     public class MinecraftServer
     {
-        DialogManager dialogManager = new DialogManager(MainWindowContent.instance, MainWindowContent.instance.Dispatcher);
+        public static MinecraftServer current;
         public ServerConfiguration config;
-        public static MinecraftServer instance;
+        public ServerProperties props;
 
-        public MinecraftServer(ServerConfiguration config)
+        public MinecraftServer()
         {
-            instance = this;
-            this.config = config;
+            current = this;
+            loadConfig(this);
             if(config.type == ServerConfiguration.ServerType.Forge)
             {
                 if(config.serverFile.Equals(""))
                 {
-                    IMessageDialog install = dialogManager.CreateMessageDialog("There is no server currently installed, would you like to install forge?", DialogMode.YesNo);
-                    install.Yes = () => { installForge(config.serverDirectory); };
-                    install.No = () => { MessageBox.Show("Server not started."); };
+                    IMessageDialog install = MainWindowContent.dialogManager.CreateMessageDialog("No server loaded, would you like to create a new one or load?", DialogMode.YesNo);
+                    install.YesText = "Create";
+                    install.NoText = "Load";
+                    install.Yes = () => { installForge(this); };
+                    install.No = () => { OpenFileDialog dialog = new OpenFileDialog(); if (dialog.ShowDialog() == true) { loadConfig(MinecraftServer.current, dialog.FileName); } };
                     install.Show();
-                    return;
                 }
+                props = new ServerProperties(Path.Combine(config.directory, "server.properties"));
             }
         }
 
-        private void installForge(string serverDirectory)
+
+        internal static void loadConfig(MinecraftServer server)
+        {
+            if (File.Exists(@"data.msa"))
+            {
+                server.config = ServerConfiguration.deserializeFromXML(@"data.msa");
+            }
+            else
+            {
+                server.config = new ServerConfiguration();
+            }
+
+        }
+        internal static void loadConfig(MinecraftServer server, string path)
+        {
+            if (File.Exists(path))
+            {
+                server.config = ServerConfiguration.deserializeFromXML(path);
+            }
+            else
+            {
+                server.config = new ServerConfiguration();
+            }
+        }
+        private void installForge(MinecraftServer server)
         {
 
-            if (!Directory.Exists(serverDirectory))
+            if (!Directory.Exists(server.config.directory))
             {
                 try
                 {
-                    Directory.CreateDirectory(serverDirectory);
+                    Directory.CreateDirectory(server.config.directory);
                 }
                 catch
                 {
@@ -64,8 +92,8 @@ namespace Minecraft_Server_Administrator.Server
             using (WebClient client = new WebClient())
             {
 
-                IProgressDialog downloadForgeDialog = dialogManager.CreateProgressDialog("Downloading forge installer", "Download complete", DialogMode.OkCancel);
-                IWaitDialog installForgeDialog = dialogManager.CreateWaitDialog("Installing Forge Server", "Forge Installed", DialogMode.OkCancel);
+                IProgressDialog downloadForgeDialog = MainWindowContent.dialogManager.CreateProgressDialog("Downloading forge installer", "Download complete", DialogMode.OkCancel);
+                IWaitDialog installForgeDialog = MainWindowContent.dialogManager.CreateWaitDialog("Installing Forge Server", "Forge Installed", DialogMode.OkCancel);
                 
                 downloadForgeDialog.Cancel = () => { client.CancelAsync(); return; };
                 downloadForgeDialog.CanOk = false;
@@ -80,7 +108,7 @@ namespace Minecraft_Server_Administrator.Server
                             {
                                 FileName = Path.Combine(Environment.GetEnvironmentVariable("JAVA_HOME"), "bin","java.exe"),
                                 Arguments = "-jar ForgeInstaller.jar --installServer",
-                                WorkingDirectory = "Server"
+                                WorkingDirectory = Path.Combine(server.config.directory)
                             }
                         };
                         process.Start();
@@ -94,15 +122,14 @@ namespace Minecraft_Server_Administrator.Server
                 installForgeDialog.Ok = () =>
                 {
 
-                    File.Delete(@"Server\ForgeInstaller.jar");
-                    config.serverFile = new DirectoryInfo("Server").GetFiles(@"forge-*.jar")[0].Name;
+                    File.Delete(Path.Combine(server.config.directory, "ForgeInstaller.jar"));
+                    server.config.serverFile = new DirectoryInfo("Server").GetFiles(@"forge-*.jar")[0].Name;
 
-                    StreamWriter eula = File.CreateText(@"Server\eula.txt");
+                    StreamWriter eula = File.CreateText(Path.Combine(server.config.directory,"eula.txt"));
                     eula.WriteLine("eula=true");
                     eula.Flush();
                     eula.Close();
-                    config.serializeToXML(@"Server\data.msa");
-                    startServer();
+                    server.config.serializeToXML(@"data.msa");
                 };
 
                 client.DownloadProgressChanged += new DownloadProgressChangedEventHandler(
@@ -118,7 +145,7 @@ namespace Minecraft_Server_Administrator.Server
                     {
                         downloadForgeDialog.CanOk = true;
                     });
-                client.DownloadFileAsync(new Uri(url), Path.Combine(serverDirectory, "ForgeInstaller.jar"));
+                client.DownloadFileAsync(new Uri(url), Path.Combine(server.config.directory, "ForgeInstaller.jar"));
                 downloadForgeDialog.Show();
             }
         }
@@ -128,7 +155,7 @@ namespace Minecraft_Server_Administrator.Server
             try
             {
                 string currentDirectory = Directory.GetCurrentDirectory();
-                Directory.SetCurrentDirectory(config.serverDirectory);
+                Directory.SetCurrentDirectory(config.directory);
                 MainWindowContent.instance.Console.StartProcess(Path.Combine(Environment.GetEnvironmentVariable("JAVA_HOME"), "bin", "java.exe"), "-jar " + config.serverFile + " nogui");
                 Directory.SetCurrentDirectory(currentDirectory);
                 MainWindowContent.instance.buttonStart.IsEnabled = false;
@@ -151,5 +178,11 @@ namespace Minecraft_Server_Administrator.Server
         {
             return MainWindowContent.instance.Console.IsProcessRunning;
         }
+
+        public void loadProperties()
+        {
+            props.loadProperties(Path.Combine(config.directory, "server.properties"));
+        }
+
     }
 }

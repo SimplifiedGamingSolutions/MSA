@@ -24,7 +24,7 @@
 
 		public MainViewModel()
         {
-            this.Title = string.Format("Fluent Ribbon Control Suite {0}", GetVersionText());
+            this.Title = string.Format("Minecraft Server Administrator {0}", GetVersionText());
             this.Zoom = 1.0;
 
             this.BoundSpinnerValue = 1;
