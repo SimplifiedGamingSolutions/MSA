@@ -122,15 +122,16 @@ namespace Minecraft_Server_Administrator.Server
         {
             if(instance == null)
             {
+                MinecraftServer server;
                 if (File.Exists(@"Server\data.msa"))
                 {
-                    new MinecraftServer(ServerConfiguration.deserializeFromXML(@"Server\data.msa"));
+                    server = new MinecraftServer(ServerConfiguration.deserializeFromXML(@"Server\data.msa"));
                 }
                 else
                 {
-                    new MinecraftServer(new ServerConfiguration());
+                    server = new MinecraftServer(new ServerConfiguration());
                 }
-                loadProperties(@"Server\server.properties");
+                loadProperties(server.config, @"Server\server.properties");
                 createProperties();
             }
             else
@@ -141,9 +142,9 @@ namespace Minecraft_Server_Administrator.Server
 
         }
 
-        private static void loadProperties(string path)
+        private static void loadProperties(ServerConfiguration config, string path)
         {
-            ServerProperties props = new ServerProperties(path);
+            config.properties = new ServerProperties(path);
         }
 
         private static void createProperties()
@@ -177,15 +178,33 @@ namespace Minecraft_Server_Administrator.Server
             Grid.SetColumn(label, 0);
             MainWindowContent.instance.ConfigGrid.Children.Add(label);
             ComboBox comboBox = new ComboBox();
-            comboBox.Items.Add(new ComboBoxItem { Content = "False" });
-            comboBox.Items.Add(new ComboBoxItem { Content = "True" });
+            comboBox.Items.Add( "false" );
+            comboBox.Items.Add( "true" );
+            comboBox.VerticalAlignment = VerticalAlignment.Center;
+            comboBox.HorizontalAlignment = HorizontalAlignment.Left;
+            comboBox.SelectionChanged += comboBox_SelectionChanged;
             if (!value)
                 comboBox.SelectedIndex = 0;
             else
                 comboBox.SelectedIndex = 1;
+            comboBox.Tag = new string[]{name.Replace('_','-'),value.ToString().ToLower()};
             Grid.SetRow(comboBox, row);
             Grid.SetColumn(comboBox, 1);
             MainWindowContent.instance.ConfigGrid.Children.Add(comboBox);
+        }
+
+        static void comboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ComboBox box = (ComboBox)sender;
+            if (box.Tag != null)
+            {
+                var str = File.ReadAllText(@"Server\server.properties");
+                string old = ((string[])box.Tag)[0] + '=' + ((string[])box.Tag)[1];
+                string newString = ((string[])box.Tag)[0] + '=' + box.SelectedItem.ToString().ToLower();
+                str = str.Replace(old, newString);
+                box.Tag = new string[] { ((string[])box.Tag)[0], box.SelectedItem.ToString().ToLower() };
+                File.WriteAllText(@"Server\server.properties", str);
+            }
         }
 
         private static void createStringProperty(string name, string value, int row)
@@ -200,9 +219,25 @@ namespace Minecraft_Server_Administrator.Server
             textBox.VerticalAlignment = VerticalAlignment.Center;
             textBox.TextAlignment = TextAlignment.Left;
             textBox.Text = value;
+            textBox.TextChanged += textBox_TextChanged;
+            textBox.Tag = new string[] { name.Replace('_', '-'), value.ToLower() };
             Grid.SetRow(textBox, row);
             Grid.SetColumn(textBox, 1);
             MainWindowContent.instance.ConfigGrid.Children.Add(textBox);
+        }
+
+        static void textBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox box = (TextBox)sender;
+            if (box.Tag != null)
+            {
+                var str = File.ReadAllText(@"Server\server.properties");
+                string old = ((string[])box.Tag)[0] + '=' + ((string[])box.Tag)[1];
+                string newString = ((string[])box.Tag)[0] + '=' + box.Text.ToLower();
+                str = str.Replace(old, newString);
+                box.Tag = new string[] { ((string[])box.Tag)[0], box.Text.ToLower() };
+                File.WriteAllText(@"Server\server.properties", str);
+            }
         }
 
         private static void createIntProperty(string name, int value, int row)
@@ -213,12 +248,13 @@ namespace Minecraft_Server_Administrator.Server
             Grid.SetRow(label, row);
             Grid.SetColumn(label, 0);
             MainWindowContent.instance.ConfigGrid.Children.Add(label);
-            //<TextBox Grid.Row="2" Grid.Column="2" VerticalAlignment="Center" TextAlignment="Left" PreviewTextInput="NumericOnly"  DataObject.Pasting="TextBoxPasting" />
             TextBox textBox = new TextBox();
             textBox.VerticalAlignment = VerticalAlignment.Center;
             textBox.TextAlignment = TextAlignment.Left;
             textBox.PreviewTextInput += NumericOnly;
             textBox.Text = value.ToString();
+            textBox.TextChanged += textBox_TextChanged;
+            textBox.Tag = new string[] { name.Replace('_', '-'), value.ToString() };
             DataObject.AddPastingHandler(textBox, TextBoxPasting);
             Grid.SetRow(textBox, row);
             Grid.SetColumn(textBox, 1);
@@ -234,9 +270,8 @@ namespace Minecraft_Server_Administrator.Server
         {
             Regex regex = new Regex("[^0-9.-]+"); //regex that matches disallowed text
             return !regex.IsMatch(text);
-            /*<TextBox Grid.Row="6" Grid.Column="2" VerticalAlignment="Center" TextAlignment="Left" PreviewTextInput="NumericOnly"  DataObject.Pasting="TextBoxPasting" />*/
         }
-        // Use the DataObject.Pasting Handler 
+
         private static void TextBoxPasting(object sender, DataObjectPastingEventArgs e)
         {
             if (e.DataObject.GetDataPresent(typeof(String)))
