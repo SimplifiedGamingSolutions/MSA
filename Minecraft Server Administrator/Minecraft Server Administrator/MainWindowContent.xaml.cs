@@ -29,6 +29,7 @@ namespace Minecraft_Server_Administrator
         private readonly MainViewModel viewModel;
         private PlayerCommandMenu pc;
         private SortedSet<string> playerList = new SortedSet<string>{"No Players Online"};
+        private List<string> historyList = new List<string>(10);
         public MainWindowContent()
         {
             InitializeComponent();
@@ -40,11 +41,37 @@ namespace Minecraft_Server_Administrator
             this.DataContext = this.viewModel;
             Players.MouseRightButtonUp += Players_MouseRightButtonUp;
             MainTabControl.SelectionChanged += MainTabControl_SelectionChanged;
+            commandTextBox.IsUndoEnabled = true;
+            commandTextBox.KeyUp += commandTextBox_KeyUp;
             MainWindowContent.instance.buttonStart.IsEnabled = true;
             MainWindowContent.instance.buttonStop.IsEnabled = false;
             MainWindowContent.instance.buttonRestart.IsEnabled = false;
             Console.IsInputEnabled = true;
 
+        }
+        private int currentHistory = 0;
+        void commandTextBox_KeyUp(object sender, KeyEventArgs e)
+        {
+            TextBox cmd = ((TextBox)sender);
+            if(e.Key == Key.Enter)
+            {
+                historyList.Insert(0, cmd.Text);
+                currentHistory = -1;
+                Console.WriteInput(cmd.Text, Colors.White, false);
+                cmd.Clear();
+            }
+            else if(e.Key == Key.Up)
+            {
+                if (historyList.Count-1 > currentHistory)
+                    currentHistory++;
+                cmd.Text = historyList.ElementAt(currentHistory);
+            }
+            else if(e.Key == Key.Down)
+            {
+                if (currentHistory > 0)
+                    currentHistory--;
+                cmd.Text = historyList.ElementAt(currentHistory);
+            }
         }
 
         void MainTabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)

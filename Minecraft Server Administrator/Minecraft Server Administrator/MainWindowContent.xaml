@@ -133,7 +133,12 @@
             <TabItem Header="Console">
                 <Border BorderBrush="#FFACACAC" BorderThickness="1">
                     <Grid x:Name="HomeGrid">
-                        <WPF:ConsoleControl x:Name="Console"/>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="20"/>
+                        </Grid.RowDefinitions>
+                        <WPF:ConsoleControl x:Name="Console" Grid.Row="0"/>
+                        <TextBox Name="commandTextBox" Grid.Row="1"/>
                     </Grid>
                 </Border>
             </TabItem>
