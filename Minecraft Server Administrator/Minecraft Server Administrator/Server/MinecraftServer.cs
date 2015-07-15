@@ -184,5 +184,10 @@ namespace Minecraft_Server_Administrator.Server
             props.loadProperties(Path.Combine(config.directory, "server.properties"));
         }
 
+
+        internal void sendCommand(string command)
+        {
+            MainWindowContent.instance.Console.WriteInput(command, Colors.White, false);
+        }
     }
 }

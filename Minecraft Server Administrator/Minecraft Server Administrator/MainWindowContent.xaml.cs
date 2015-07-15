@@ -50,9 +50,9 @@ namespace Minecraft_Server_Administrator
             commandTextBox.IsUndoEnabled = true;
             commandTextBox.KeyUp += commandTextBox_KeyUp;
             Console.LogChangedEvent += Console_LogChangedEvent;
-            MainWindowContent.instance.buttonStart.IsEnabled = true;
-            MainWindowContent.instance.buttonStop.IsEnabled = false;
-            MainWindowContent.instance.buttonRestart.IsEnabled = false;
+            buttonStart.IsEnabled = true;
+            buttonStop.IsEnabled = false;
+            buttonRestart.IsEnabled = false;
             Console.IsInputEnabled = true;
         }
 
@@ -108,9 +108,6 @@ namespace Minecraft_Server_Administrator
 
         private void Players_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
         {
-            
-            string name = (string)((TreeViewItem)sender).Items.CurrentItem;
-            pc.setName(name);
             (sender as TreeViewItem).ContextMenu = pc;
         }
 
