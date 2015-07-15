@@ -319,7 +319,7 @@ namespace Minecraft_Server_Administrator
 
         void achievement_PreviewMouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            new CustomPopup(MainWindowContent.instance).show();
+            new CustomPopup(MainWindowContent.instance).ShowDialog();
         }
 
 

@@ -10,12 +10,10 @@ using System.Windows.Media;
 
 namespace Minecraft_Server_Administrator.UI
 {
-    class CustomPopup : Popup
+    class CustomPopup : Window
     {
         public CustomPopup(UIElement parent) : base()
         {
-            this.Placement = PlacementMode.Center;
-            this.PlacementTarget = MainWindowContent.instance;
             Grid grid = new Grid();
             grid.Height = 100;
             grid.Width = 200;
@@ -23,27 +21,12 @@ namespace Minecraft_Server_Administrator.UI
             button.Content = "Click me";
             button.PreviewMouseUp += button_PreviewMouseUp;
             grid.Children.Add(button);
-            Border border = new Border();
-            border.BorderBrush = Brushes.Red;
-            border.BorderThickness = new Thickness(5, 5, 5, 5);
-            border.Child = grid;
-            this.Child = border;
-            this.IsOpen = true;
+            this.Content = grid;
         }
 
         void button_PreviewMouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            this.hide();
-        }
-
-        internal void show()
-        {
-            this.IsOpen = true;
-        }
-
-        internal void hide()
-        {
-            this.IsOpen = false;
+            this.Close();
         }
     }
 }
