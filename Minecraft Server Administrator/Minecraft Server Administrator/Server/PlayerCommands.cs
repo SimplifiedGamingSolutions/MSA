@@ -1,4 +1,5 @@
 ﻿using Minecraft_Server_Administrator.Server;
+using Minecraft_Server_Administrator.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Media;
 using Technewlogic.WpfDialogManagement;
 using Technewlogic.WpfDialogManagement.Contracts;
@@ -317,13 +319,9 @@ namespace Minecraft_Server_Administrator
 
         void achievement_PreviewMouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            IMessageDialog achievmentWindow = MainWindowContent.dialogManager.CreateMessageDialog("hello there \"" + getName()+"\"",DialogMode.Ok);
-
-            achievmentWindow.Ok = () => { MinecraftServer.current.sendCommand("kill menoshin"); };
-
-            achievmentWindow.Show();
-
+            new CustomPopup(MainWindowContent.instance).show();
         }
+
 
 
 
