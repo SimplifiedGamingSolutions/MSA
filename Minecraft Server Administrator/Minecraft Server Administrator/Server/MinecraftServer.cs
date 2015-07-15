@@ -118,7 +118,10 @@ namespace Minecraft_Server_Administrator.Server
             String javapath;
             if (javaDirectory == null)
             {
-                OpenFileDialog dialog = new OpenFileDialog(); if (dialog.ShowDialog() == true) { javapath = dialog.FileName; Environment.SetEnvironmentVariable("JAVA_HOME", javapath.Substring(0, javapath.LastIndexOf('\\')).Substring(0, javapath.LastIndexOf('\\'))); } else { return; }
+                OpenFileDialog dialog = new OpenFileDialog(); if (dialog.ShowDialog() == true) { javapath = dialog.FileName; } else { return; }
+                javaDirectory = javapath.Substring(0, javapath.LastIndexOf('\\'));
+                javaDirectory = javaDirectory.Substring(0, javapath.LastIndexOf('\\'));
+                Environment.SetEnvironmentVariable("JAVA_HOME", javaDirectory, EnvironmentVariableTarget.User);
             }
             else
             {
@@ -182,7 +185,10 @@ namespace Minecraft_Server_Administrator.Server
                 String javapath;
                 if (javaDirectory == null)
                 {
-                    OpenFileDialog dialog = new OpenFileDialog(); if (dialog.ShowDialog() == true) { javapath = dialog.FileName; Environment.SetEnvironmentVariable("JAVA_HOME", javapath.Substring(0, javapath.LastIndexOf('\\')).Substring(0, javapath.LastIndexOf('\\'))); } else { return; }
+                    OpenFileDialog dialog = new OpenFileDialog(); if (dialog.ShowDialog() == true) { javapath = dialog.FileName;  } else { return; }
+                    javaDirectory = javapath.Substring(0, javapath.LastIndexOf('\\'));
+                    javaDirectory = javaDirectory.Substring(0, javaDirectory.LastIndexOf('\\'));
+                    Environment.SetEnvironmentVariable("JAVA_HOME", javaDirectory, EnvironmentVariableTarget.User);
                 }
                 else
                 {
