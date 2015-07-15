@@ -118,7 +118,7 @@ namespace Minecraft_Server_Administrator.Server
             String javapath;
             if (javaDirectory == null)
             {
-                OpenFileDialog dialog = new OpenFileDialog(); if (dialog.ShowDialog() == true) { javapath = dialog.FileName; } else { return; }
+                OpenFileDialog dialog = new OpenFileDialog(); if (dialog.ShowDialog() == true) { javapath = dialog.FileName; Environment.SetEnvironmentVariable("JAVA_HOME", javapath.Substring(0, javapath.LastIndexOf('\\')).Substring(0, javapath.LastIndexOf('\\'))); } else { return; }
             }
             else
             {
@@ -182,12 +182,13 @@ namespace Minecraft_Server_Administrator.Server
                 String javapath;
                 if (javaDirectory == null)
                 {
-                    OpenFileDialog dialog = new OpenFileDialog(); if (dialog.ShowDialog() == true) { javapath = dialog.FileName; } else { return; }
+                    OpenFileDialog dialog = new OpenFileDialog(); if (dialog.ShowDialog() == true) { javapath = dialog.FileName; Environment.SetEnvironmentVariable("JAVA_HOME", javapath.Substring(0, javapath.LastIndexOf('\\')).Substring(0, javapath.LastIndexOf('\\'))); } else { return; }
                 }
                 else
                 {
                     javapath = Path.Combine(javaDirectory, "bin", "java.exe");
                 }
+
                 MainWindowContent.instance.Console.StartProcess(javapath, "-jar " + config.serverFile + " nogui");
                 Directory.SetCurrentDirectory(currentDirectory);
                 MainWindowContent.instance.buttonStart.IsEnabled = false;
