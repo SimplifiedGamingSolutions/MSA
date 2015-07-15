@@ -108,6 +108,7 @@ namespace Minecraft_Server_Administrator
 
         private void Players_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
         {
+            pc.Tag = e.GetPosition((TreeViewItem)sender);
             (sender as TreeViewItem).ContextMenu = pc;
         }
 
@@ -145,7 +146,7 @@ namespace Minecraft_Server_Administrator
 
         private void buttonStop_Click(object sender, RoutedEventArgs e)
         {
-            Minecraft_Server_Administrator.MainWindowContent.instance.Console.WriteInput("stop", Colors.White, false);
+            MinecraftServer.current.stopServer();
         }
 
         private void buttonWeather_Click(object sender, RoutedEventArgs e)

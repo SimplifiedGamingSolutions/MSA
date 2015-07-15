@@ -219,7 +219,9 @@ namespace Minecraft_Server_Administrator.Server
         }
         public bool isRunning()
         {
-            return MainWindowContent.instance.Console.IsProcessRunning;
+            if (MainWindowContent.instance.Console.getProcess() != null)
+                return !MainWindowContent.instance.Console.getProcess().HasExited;
+            return false;
         }
 
         public void loadProperties()

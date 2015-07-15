@@ -10,6 +10,7 @@ using System.Windows.Interop;
 using System.ComponentModel;
 using System.Windows.Controls.Primitives;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace ConsoleControl.WPF
 {
@@ -22,10 +23,10 @@ namespace ConsoleControl.WPF
         {
             InitializeComponent();
             //  Handle process events.
-            processInterace.OnProcessOutput += new ProcessInterface.ProcessEventHanlder(processInterace_OnProcessOutput);
-            processInterace.OnProcessError += processInterace_OnProcessError;
-            processInterace.OnProcessInput += new ProcessInterface.ProcessEventHanlder(processInterace_OnProcessInput);
-            processInterace.OnProcessExit += new ProcessInterface.ProcessEventHanlder(processInterace_OnProcessExit);
+            processInterface.OnProcessOutput += new ProcessInterface.ProcessEventHanlder(processInterace_OnProcessOutput);
+            processInterface.OnProcessError += processInterace_OnProcessError;
+            processInterface.OnProcessInput += new ProcessInterface.ProcessEventHanlder(processInterace_OnProcessInput);
+            processInterface.OnProcessExit += new ProcessInterface.ProcessEventHanlder(processInterace_OnProcessExit);
 
             //  Wait for key down messages on the rich text box.
             richTextBoxConsole.KeyDown += new KeyEventHandler(richTextBoxConsole_KeyDown);
@@ -84,7 +85,7 @@ namespace ConsoleControl.WPF
             //  Are we showing diagnostics?
             if (ShowDiagnostics)
             {
-                WriteOutput(System.Environment.NewLine + processInterace.ProcessFileName + " exited.", Color.FromArgb(255, 0, 255, 0));
+                WriteOutput(System.Environment.NewLine + processInterface.ProcessFileName + " exited.", Color.FromArgb(255, 0, 255, 0));
             }
 
             //  Read only again.
@@ -234,6 +235,10 @@ namespace ConsoleControl.WPF
                 else
                     return false;
             }
+            else if(dExtent < dViewport)
+            {
+                return true;
+            }
             else
             {
                 return false;
@@ -269,7 +274,7 @@ namespace ConsoleControl.WPF
                 lastInput = input;
 
                 //  Write the input.
-                processInterace.WriteInput(input);
+                processInterface.WriteInput(input);
 
                 //  Fire the event.
                 FireProcessInputEvent(new ProcessEventArgs(input));
@@ -308,7 +313,7 @@ namespace ConsoleControl.WPF
             }
 
             //  Start the process.
-            processInterace.StartProcess(fileName, arguments);
+            processInterface.StartProcess(fileName, arguments);
 
             //  If we enable input, make the control not read only.
             if (IsInputEnabled)
@@ -324,7 +329,7 @@ namespace ConsoleControl.WPF
         public void StopProcess()
         {
             //  Stop the interface.
-            processInterace.StopProcess();
+            processInterface.StopProcess();
         }
 
         /// <summary>
@@ -354,7 +359,7 @@ namespace ConsoleControl.WPF
         /// <summary>
         /// The internal process interface used to interface with the process.
         /// </summary>
-        private ProcessInterface.ProcessInterface processInterace = new ProcessInterface.ProcessInterface();
+        private ProcessInterface.ProcessInterface processInterface = new ProcessInterface.ProcessInterface();
 
         /// <summary>
         /// Current position that input starts at.
@@ -386,6 +391,11 @@ namespace ConsoleControl.WPF
           set { SetValue(ShowDiagnosticsProperty, value); }
         }
         
+        public Process getProcess()
+        {
+            return processInterface.Process;
+        }
+
         private static void OnShowDiagnosticsChanged(DependencyObject o, DependencyPropertyChangedEventArgs args)
         {
           ConsoleControl me = o as ConsoleControl;

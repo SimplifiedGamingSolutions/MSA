@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using Technewlogic.WpfDialogManagement;
@@ -164,7 +165,14 @@ namespace Minecraft_Server_Administrator
 
         string getName()
         {
-            return MainWindowContent.instance.Players.Items.CurrentItem.ToString();
+
+            IInputElement element = MainWindowContent.instance.Players.InputHitTest((Point)Tag);
+            if (element is TextBlock)
+            {
+                return (element as TextBlock).Text;
+            }
+            return null;
+            
         }
 
         void xp_PreviewMouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
@@ -244,17 +252,17 @@ namespace Minecraft_Server_Administrator
 
         void pardon_PreviewMouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            MinecraftServer.current.sendCommand("pardon" + getName());
+            MinecraftServer.current.sendCommand("pardon " + getName());
         }
 
         void op_PreviewMouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            MinecraftServer.current.sendCommand("op" + getName());
+            MinecraftServer.current.sendCommand("op " + getName());
         }
 
         void kick_PreviewMouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            MinecraftServer.current.sendCommand("kick" + getName());
+            MinecraftServer.current.sendCommand("kick " + getName());
         }
 
         void give_PreviewMouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
@@ -269,7 +277,7 @@ namespace Minecraft_Server_Administrator
 
         void enchant_PreviewMouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            MinecraftServer.current.sendCommand("enchant" + getName());
+            MinecraftServer.current.sendCommand("enchant " + getName());
         }
 
         void effect_PreviewMouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
@@ -284,17 +292,17 @@ namespace Minecraft_Server_Administrator
 
         void deop_PreviewMouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            MinecraftServer.current.sendCommand("deop" + getName());
+            MinecraftServer.current.sendCommand("deop " + getName());
         }
 
         void clear_PreviewMouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            MinecraftServer.current.sendCommand("clear" + getName());
+            MinecraftServer.current.sendCommand("clear " + getName());
         }
 
         void kill_PreviewMouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            MinecraftServer.current.sendCommand("kill" + getName());
+            MinecraftServer.current.sendCommand("kill " + getName());
         }
 
         void banIp_PreviewMouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
@@ -304,7 +312,7 @@ namespace Minecraft_Server_Administrator
 
         void ban_PreviewMouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            MinecraftServer.current.sendCommand("ban" + getName());
+            MinecraftServer.current.sendCommand("ban " + getName());
         }
 
         void achievement_PreviewMouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
