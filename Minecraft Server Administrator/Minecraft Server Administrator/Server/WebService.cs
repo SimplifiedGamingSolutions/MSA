@@ -71,28 +71,28 @@ namespace Minecraft_Server_Administrator.Server
         }
         private void ProcessPlayerLeft(BackgroundWorker bw, HttpListenerContext context)
         {
-            var body = new StreamReader(context.Request.InputStream).ReadToEnd();
-            string name = body;
+            string name = HttpUtility.UrlDecode(new StreamReader(context.Request.InputStream).ReadLine(), System.Text.Encoding.UTF8);
             bw.ReportProgress(0, new string[] { "remove", name });
-            byte[] b = Encoding.UTF8.GetBytes("Name Deleted: " + name);
+            string response = HttpUtility.UrlEncode("Name Created: " + name);
             context.Response.StatusCode = 200;
             context.Response.KeepAlive = false;
-            context.Response.ContentLength64 = b.Length;
-            var output = context.Response.OutputStream;
-            output.Write(b, 0, b.Length);
+            //context.Response.ContentLength64 = b.Length;
+            var output = new StreamWriter(context.Response.OutputStream);
+            output.WriteLine(response);
+            output.Flush();
             context.Response.Close();
         }
         private void ProcessPlayerJoined(BackgroundWorker bw, HttpListenerContext context)
         {
-            var body = new StreamReader(context.Request.InputStream).ReadToEnd();
-            string name = body;
+            string name = HttpUtility.UrlDecode(new StreamReader(context.Request.InputStream).ReadLine(), System.Text.Encoding.UTF8);
             bw.ReportProgress(0, new string[]{"add", name});
-            byte[] b = Encoding.UTF8.GetBytes("Name Created: " + name);
+            string response = HttpUtility.UrlEncode("Name Created: " + name);
             context.Response.StatusCode = 200;
             context.Response.KeepAlive = false;
-            context.Response.ContentLength64 = b.Length;
-            var output = context.Response.OutputStream;
-            output.Write(b, 0, b.Length);
+            //context.Response.ContentLength64 = response.Length;
+            var output = new StreamWriter(context.Response.OutputStream);
+            output.WriteLine(response);
+            output.Flush();
             context.Response.Close();
         }
     }
