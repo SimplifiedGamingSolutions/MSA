@@ -67,6 +67,9 @@ namespace Minecraft_Server_Administrator.Server
                 server.config = new ServerConfiguration();
             }
         }
+        private static WebClient client;
+        private static IProgressDialog downloadForgeDialog;
+        private static IWaitDialog installForgeDialog;
         private void installForge(MinecraftServer server)
         {
 
@@ -81,6 +84,68 @@ namespace Minecraft_Server_Administrator.Server
                     return;
                 }
             }
+                client = new WebClient();
+                downloadForgeDialog = MainWindowContent.dialogManager.CreateProgressDialog("Downloading forge installer", "Download complete", DialogMode.OkCancel);
+                installForgeDialog = MainWindowContent.dialogManager.CreateWaitDialog("Installing Forge Server", "Forge Installed", DialogMode.OkCancel);
+
+                initializeInstallForgeDialog();
+
+                initializeDownloadForgeDialog();
+
+        }
+
+        private void initializeInstallForgeDialog()
+        {
+            installForgeDialog.Cancel = () => { client.CancelAsync(); };
+            installForgeDialog.CanOk = false;
+            installForgeDialog.Ok = () =>
+            {
+
+                File.Delete(Path.Combine(MinecraftServer.current.config.directory, "ForgeInstaller.jar"));
+                MinecraftServer.current.config.serverFile = new DirectoryInfo("Server").GetFiles(@"forge-*.jar")[0].Name;
+
+                StreamWriter eula = File.CreateText(Path.Combine(MinecraftServer.current.config.directory, "eula.txt"));
+                eula.WriteLine("eula=true");
+                eula.Flush();
+                eula.Close();
+                MinecraftServer.current.config.serializeToXML(@"data.msa");
+            };
+        }
+
+        private void initializeDownloadForgeDialog()
+        {
+            String javaDirectory = Environment.GetEnvironmentVariable("JAVA_HOME");
+            String javapath;
+            if (javaDirectory == null)
+            {
+                OpenFileDialog dialog = new OpenFileDialog(); if (dialog.ShowDialog() == true) { javapath = dialog.FileName; } else { return; }
+            }
+            else
+            {
+                javapath = Path.Combine(javaDirectory, "bin", "java.exe");
+            }
+            downloadForgeDialog.Cancel = () => { client.CancelAsync(); return; };
+            downloadForgeDialog.CanOk = false;
+            downloadForgeDialog.Ok = () =>
+            {
+
+                installForgeDialog.Show(() =>
+                {
+                    var process = new Process
+                    {
+                        StartInfo = new ProcessStartInfo
+                        {
+                            FileName = javapath,
+                            Arguments = "-jar ForgeInstaller.jar --installServer",
+                            WorkingDirectory = Path.Combine(MinecraftServer.current.config.directory)
+                        }
+                    };
+                    process.Start();
+                    process.WaitForExit();
+                    installForgeDialog.CanOk = true;
+                });
+            };
+
             HtmlWeb hw = new HtmlWeb();
             HtmlDocument doc = hw.Load("http://files.minecraftforge.net/maven/net/minecraftforge/forge/");
             string url = doc.DocumentNode.Descendants("a")
@@ -89,65 +154,21 @@ namespace Minecraft_Server_Administrator.Server
                           .Where(u => u.Contains("installer.jar"))
                           .Where(u => !u.Contains("adfoc.us"))
                           .First();
-            using (WebClient client = new WebClient())
-            {
-
-                IProgressDialog downloadForgeDialog = MainWindowContent.dialogManager.CreateProgressDialog("Downloading forge installer", "Download complete", DialogMode.OkCancel);
-                IWaitDialog installForgeDialog = MainWindowContent.dialogManager.CreateWaitDialog("Installing Forge Server", "Forge Installed", DialogMode.OkCancel);
-                
-                downloadForgeDialog.Cancel = () => { client.CancelAsync(); return; };
-                downloadForgeDialog.CanOk = false;
-                downloadForgeDialog.Ok = () =>
+            client.DownloadProgressChanged += new DownloadProgressChangedEventHandler(
+                (sender, e) =>
                 {
-
-                    installForgeDialog.Show(() =>
-                    {
-                        var process = new Process
-                        {
-                            StartInfo = new ProcessStartInfo
-                            {
-                                FileName = Path.Combine(Environment.GetEnvironmentVariable("JAVA_HOME"), "bin","java.exe"),
-                                Arguments = "-jar ForgeInstaller.jar --installServer",
-                                WorkingDirectory = Path.Combine(server.config.directory)
-                            }
-                        };
-                        process.Start();
-                        process.WaitForExit();
-                        installForgeDialog.CanOk = true;
-                    });
-                };
-
-                installForgeDialog.Cancel = () => { client.CancelAsync(); };
-                installForgeDialog.CanOk = false;
-                installForgeDialog.Ok = () =>
+                    double bytesIn = double.Parse(e.BytesReceived.ToString());
+                    double totalBytes = double.Parse(e.TotalBytesToReceive.ToString());
+                    double percentage = bytesIn / totalBytes * 100;
+                    downloadForgeDialog.Progress = int.Parse(Math.Truncate(percentage).ToString());
+                });
+            client.DownloadFileCompleted += new AsyncCompletedEventHandler(
+                (sender, e) =>
                 {
-
-                    File.Delete(Path.Combine(server.config.directory, "ForgeInstaller.jar"));
-                    server.config.serverFile = new DirectoryInfo("Server").GetFiles(@"forge-*.jar")[0].Name;
-
-                    StreamWriter eula = File.CreateText(Path.Combine(server.config.directory,"eula.txt"));
-                    eula.WriteLine("eula=true");
-                    eula.Flush();
-                    eula.Close();
-                    server.config.serializeToXML(@"data.msa");
-                };
-
-                client.DownloadProgressChanged += new DownloadProgressChangedEventHandler(
-                    (sender, e) =>
-                    {
-                        double bytesIn = double.Parse(e.BytesReceived.ToString());
-                        double totalBytes = double.Parse(e.TotalBytesToReceive.ToString());
-                        double percentage = bytesIn / totalBytes * 100;
-                        downloadForgeDialog.Progress = int.Parse(Math.Truncate(percentage).ToString());
-                    });
-                client.DownloadFileCompleted += new AsyncCompletedEventHandler(
-                    (sender, e) =>
-                    {
-                        downloadForgeDialog.CanOk = true;
-                    });
-                client.DownloadFileAsync(new Uri(url), Path.Combine(server.config.directory, "ForgeInstaller.jar"));
-                downloadForgeDialog.Show();
-            }
+                    downloadForgeDialog.CanOk = true;
+                });
+            client.DownloadFileAsync(new Uri(url), Path.Combine(MinecraftServer.current.config.directory, "ForgeInstaller.jar"));
+            downloadForgeDialog.Show();
         }
 
         public void startServer()
@@ -156,7 +177,18 @@ namespace Minecraft_Server_Administrator.Server
             {
                 string currentDirectory = Directory.GetCurrentDirectory();
                 Directory.SetCurrentDirectory(config.directory);
-                MainWindowContent.instance.Console.StartProcess(Path.Combine(Environment.GetEnvironmentVariable("JAVA_HOME"), "bin", "java.exe"), "-jar " + config.serverFile + " nogui");
+
+                String javaDirectory = Environment.GetEnvironmentVariable("JAVA_HOME");
+                String javapath;
+                if (javaDirectory == null)
+                {
+                    OpenFileDialog dialog = new OpenFileDialog(); if (dialog.ShowDialog() == true) { javapath = dialog.FileName; } else { return; }
+                }
+                else
+                {
+                    javapath = Path.Combine(javaDirectory, "bin", "java.exe");
+                }
+                MainWindowContent.instance.Console.StartProcess(javapath, "-jar " + config.serverFile + " nogui");
                 Directory.SetCurrentDirectory(currentDirectory);
                 MainWindowContent.instance.buttonStart.IsEnabled = false;
                 MainWindowContent.instance.buttonStop.IsEnabled = true;
