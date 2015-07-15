@@ -99,7 +99,7 @@ namespace Minecraft_Server_Administrator
 
         void MainTabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if(ServerPropertiesTab.IsSelected)
+            if(ServerPropertiesTab.IsSelected && MinecraftServer.current.props != null)
             {
                 MinecraftServer.current.loadProperties();
                 populatePropertiesTab(MinecraftServer.current);
@@ -201,7 +201,7 @@ namespace Minecraft_Server_Administrator
                 comboBox.SelectedIndex = 0;
             else
                 comboBox.SelectedIndex = 1;
-            comboBox.Tag = new string[] { name.Replace('_', '-'), value.ToString().ToLower() };
+            comboBox.Tag = new string[] { name.Replace('_', '-'), value.ToString() };
             Grid.SetRow(comboBox, row);
             Grid.SetColumn(comboBox, 1);
             MainWindowContent.instance.ConfigGrid.Children.Add(comboBox);
@@ -214,9 +214,9 @@ namespace Minecraft_Server_Administrator
             {
                 var str = File.ReadAllText(@"Server\server.properties");
                 string old = ((string[])box.Tag)[0] + '=' + ((string[])box.Tag)[1];
-                string newString = ((string[])box.Tag)[0] + '=' + box.SelectedItem.ToString().ToLower();
+                string newString = ((string[])box.Tag)[0] + '=' + box.SelectedItem.ToString();
                 str = str.Replace(old, newString);
-                box.Tag = new string[] { ((string[])box.Tag)[0], box.SelectedItem.ToString().ToLower() };
+                box.Tag = new string[] { ((string[])box.Tag)[0], box.SelectedItem.ToString() };
                 File.WriteAllText(@"Server\server.properties", str);
             }
         }
@@ -234,7 +234,7 @@ namespace Minecraft_Server_Administrator
             textBox.TextAlignment = TextAlignment.Left;
             textBox.Text = value;
             textBox.TextChanged += textBox_TextChanged;
-            textBox.Tag = new string[] { name.Replace('_', '-'), value.ToLower() };
+            textBox.Tag = new string[] { name.Replace('_', '-'), value };
             Grid.SetRow(textBox, row);
             Grid.SetColumn(textBox, 1);
             MainWindowContent.instance.ConfigGrid.Children.Add(textBox);
@@ -247,9 +247,9 @@ namespace Minecraft_Server_Administrator
             {
                 var str = File.ReadAllText(@"Server\server.properties");
                 string old = ((string[])box.Tag)[0] + '=' + ((string[])box.Tag)[1];
-                string newString = ((string[])box.Tag)[0] + '=' + box.Text.ToLower();
+                string newString = ((string[])box.Tag)[0] + '=' + box.Text;
                 str = str.Replace(old, newString);
-                box.Tag = new string[] { ((string[])box.Tag)[0], box.Text.ToLower() };
+                box.Tag = new string[] { ((string[])box.Tag)[0], box.Text };
                 File.WriteAllText(@"Server\server.properties", str);
             }
         }

@@ -35,11 +35,13 @@ namespace Minecraft_Server_Administrator.Server
                     IMessageDialog install = MainWindowContent.dialogManager.CreateMessageDialog("No server loaded, would you like to create a new one or load?", DialogMode.YesNo);
                     install.YesText = "Create";
                     install.NoText = "Load";
-                    install.Yes = () => { installForge(this); };
+                    install.Yes = () =>
+                    {
+                        installForge(this);
+                    };
                     install.No = () => { OpenFileDialog dialog = new OpenFileDialog(); if (dialog.ShowDialog() == true) { loadConfig(MinecraftServer.current, dialog.FileName); } };
                     install.Show();
                 }
-                props = new ServerProperties(Path.Combine(config.directory, "server.properties"));
             }
         }
 
@@ -200,6 +202,8 @@ namespace Minecraft_Server_Administrator.Server
                 MainWindowContent.instance.buttonStart.IsEnabled = false;
                 MainWindowContent.instance.buttonStop.IsEnabled = true;
                 MainWindowContent.instance.buttonRestart.IsEnabled = true;
+                if(File.Exists(Path.Combine(config.directory, "server.properties")))
+                    props = new ServerProperties(Path.Combine(config.directory, "server.properties"));
             }
             catch
             {
