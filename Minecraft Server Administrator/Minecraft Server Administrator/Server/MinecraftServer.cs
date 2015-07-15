@@ -224,7 +224,12 @@ namespace Minecraft_Server_Administrator.Server
 
         public void loadProperties()
         {
-            props.loadProperties(Path.Combine(config.directory, "server.properties"));
+                if (File.Exists(Path.Combine(config.directory, "server.properties")) && props != null)
+                    props.loadProperties(Path.Combine(config.directory, "server.properties"));
+                else if(File.Exists(Path.Combine(config.directory, "server.properties")))
+                {
+                    props = new ServerProperties(Path.Combine(config.directory, "server.properties"));
+                }
         }
 
 

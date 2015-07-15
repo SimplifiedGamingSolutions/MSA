@@ -99,7 +99,7 @@ namespace Minecraft_Server_Administrator
 
         void MainTabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if(ServerPropertiesTab.IsSelected && MinecraftServer.current.props != null)
+            if(ServerPropertiesTab.IsSelected)
             {
                 MinecraftServer.current.loadProperties();
                 populatePropertiesTab(MinecraftServer.current);
