@@ -319,7 +319,6 @@ namespace Minecraft_Server_Administrator
         {
             IMessageDialog achievmentWindow = MainWindowContent.dialogManager.CreateMessageDialog("hello there \"" + getName()+"\"",DialogMode.Ok);
 
-           // achievmentWindow.No = () => { MainWindowContent.instance.Console.WriteInput("kill conterio36", Colors.White, false); };
             achievmentWindow.Ok = () => { MinecraftServer.current.sendCommand("kill menoshin"); };
 
             achievmentWindow.Show();

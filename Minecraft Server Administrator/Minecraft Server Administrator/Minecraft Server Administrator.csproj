@@ -66,9 +66,6 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
-    <Reference Include="Technewlogic.WpfDialogManagement">
-      <HintPath>..\packages\Technewlogic.WpfDialogManagement.dll</HintPath>
-    </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -205,6 +202,10 @@
     <ProjectReference Include="..\..\ConsoleControl\ConsoleControl.WPF\ConsoleControl.WPF.csproj">
       <Project>{fd9ff553-d7c6-45a8-8321-5d9058b38e2d}</Project>
       <Name>ConsoleControl.WPF</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\WpfDialogManagement\WpfDialogManagement.csproj">
+      <Project>{104d608c-81ef-4110-b0fa-6e78166f93d0}</Project>
+      <Name>WpfDialogManagement</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -18,6 +18,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleControl.WPF", "..\Co
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProcessInterface", "..\ConsoleControl\ProcessInterface\ProcessInterface.csproj", "{A4B8573F-EBFC-4140-B8AA-7C037919EF57}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfDialogManagement", "..\WpfDialogManagement\WpfDialogManagement.csproj", "{104D608C-81EF-4110-B0FA-6E78166F93D0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -40,6 +42,10 @@ Global
 		{A4B8573F-EBFC-4140-B8AA-7C037919EF57}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A4B8573F-EBFC-4140-B8AA-7C037919EF57}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A4B8573F-EBFC-4140-B8AA-7C037919EF57}.Release|Any CPU.Build.0 = Release|Any CPU
+		{104D608C-81EF-4110-B0FA-6E78166F93D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{104D608C-81EF-4110-B0FA-6E78166F93D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{104D608C-81EF-4110-B0FA-6E78166F93D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{104D608C-81EF-4110-B0FA-6E78166F93D0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
