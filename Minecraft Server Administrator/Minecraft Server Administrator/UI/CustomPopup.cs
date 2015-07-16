@@ -17,6 +17,18 @@ namespace Minecraft_Server_Administrator.UI
         public CustomPopup(UIElement parent) : base()
         {
             grid = new Grid();
+            this.Height = 250;
+            this.Width = 250;
+        }
+
+        void button_PreviewMouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            this.Close();
+        }
+        
+        public void selectAchievement()
+        {
+            this.Title = "Give Name Achievement";
             //grid.Background = Brushes.Black;
             grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
             grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
@@ -35,15 +47,6 @@ namespace Minecraft_Server_Administrator.UI
             button.PreviewMouseUp += button_PreviewMouseUp;
             grid.Children.Add(button);
             this.Content = grid;
-        }
-
-        void button_PreviewMouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-            this.Close();
-        }
-        
-        public void selectAchievement()
-        {
             grid.Children.Clear();
             Achievements achievements = new Achievements();
             this.addItem("openInventory", achievements.getIcon("openInventory"), "Taking Inventory", 0, 0);
@@ -58,12 +61,13 @@ namespace Minecraft_Server_Administrator.UI
             this.addItem("buildBetterPickaxe", achievements.getIcon("buildBetterPickaxe"), "Getting an Upgrade", 1, 4);
             this.addItem("cookFish", achievements.getIcon("cookFish"), "Delicious Fish", 2, 0);
             this.addItem("onARail", achievements.getIcon("onARail"), "On A Rail", 2, 1);
-            this.addItem("buildSword", achievements.getIcon("buildSword"), "Time to Strike!", 2, 3);
-            this.addItem("killEnemy", achievements.getIcon("killEnemy"), "Monster Hunter", 2, 4);
-            this.addItem("killCow", achievements.getIcon("killCow"), "Cow Tipper", 3, 0);
-            this.addItem("flyPig", achievements.getIcon("flyPig"), "When Pigs Fly", 3, 1);
-            this.addItem("snipeSkeleton", achievements.getIcon("snipeSkeleton"), "Sniper Duel", 3, 2);
-            this.addItem("diamonds", achievements.getIcon("diamonds"), "DIAMONDS!", 3, 3);
+            this.addItem("buildSword", achievements.getIcon("buildSword"), "Time to Strike!", 2, 2);
+            this.addItem("killEnemy", achievements.getIcon("killEnemy"), "Monster Hunter", 2, 3);
+            this.addItem("killCow", achievements.getIcon("killCow"), "Cow Tipper", 2, 4);
+            this.addItem("flyPig", achievements.getIcon("flyPig"), "When Pigs Fly", 3, 0);
+            this.addItem("snipeSkeleton", achievements.getIcon("snipeSkeleton"), "Sniper Duel", 3, 1);
+            this.addItem("diamonds", achievements.getIcon("diamonds"), "DIAMONDS!", 3, 2);
+            this.addItem("overpowered", achievements.getIcon("overpowered"), "Overpowered", 3, 3);
             this.addItem("portal", achievements.getIcon("portal"), "We Need to Go Deeper", 3, 4);
             this.addItem("ghast", achievements.getIcon("ghast"), "Return to Sender", 4, 0);
             this.addItem("blazeRod", achievements.getIcon("blazeRod"), "Into Fire", 4, 1);
@@ -79,18 +83,29 @@ namespace Minecraft_Server_Administrator.UI
             this.addItem("fullBeacon", achievements.getIcon("fullBeacon"), "Beaconator", 6, 1);
             this.addItem("breedCow", achievements.getIcon("breedCow"), "Repopulation", 6, 2);
             this.addItem("diamondsToYou", achievements.getIcon("diamondsToYou"), "Diamonds to you!", 6, 3);
-            this.addItem("overpowered", achievements.getIcon("overpowered"), "Overpowered", 6, 4);
             ShowDialog();
         }
 
         private void addItem(string name, BitmapImage image, string message, int row, int column)
         {
             Image uiimage = new Image();
-            uiimage.Stretch = Stretch.Uniform;
-            Grid.SetColumn(uiimage, column);
-            Grid.SetRow(uiimage, row);
+            //uiimage.Stretch = Stretch.Uniform;
+            uiimage.Height = 32;
+            uiimage.Width = 32;
             uiimage.Source = image;
-            grid.Children.Add(uiimage);
+            Button button = new Button();
+            //button.Background = Brushes.DarkGreen;
+            button.VerticalAlignment = System.Windows.VerticalAlignment.Center;
+            button.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
+            StackPanel panel = new StackPanel();
+            panel.Children.Add(uiimage);
+            Label label = new Label();
+            label.Content = name;
+            panel.Children.Add(label);
+            button.Content = panel;
+            Grid.SetColumn(button, column);
+            Grid.SetRow(button, row);
+            grid.Children.Add(button);
         }
     }
 }
