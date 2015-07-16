@@ -82,6 +82,7 @@
     <Compile Include="Server\MinecraftServer.cs" />
     <Compile Include="Server\ServerConfiguration.cs" />
     <Compile Include="Server\ServerProperties.cs" />
+    <Compile Include="UI\Achievements.cs" />
     <Compile Include="UI\CustomPopup.cs" />
     <Compile Include="ViewModels\ColorViewModel.cs" />
     <Compile Include="ViewModels\FontsViewModel.cs" />
@@ -139,6 +140,13 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
+    <None Include="Resources\Images\syntheticaBlackEyeSimpleDemo.jnlp" />
+    <Resource Include="Resources\Minecrafter.Alt.ttf" />
+    <None Include="Resources\Themes\Default.theme" />
+    <None Include="Resources\Themes\jeremy.theme" />
+    <None Include="Resources\Themes\MCMA.theme" />
+    <None Include="Resources\Themes\tinylaf-1_4_0\docs\package-list" />
+    <None Include="Resources\Themes\YQ.theme" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -208,6 +216,114 @@
       <Project>{104d608c-81ef-4110-b0fa-6e78166f93d0}</Project>
       <Name>WpfDialogManagement</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\eula.txt" />
+    <Content Include="Resources\html\Copy of temp.html" />
+    <Content Include="Resources\html\temp.html" />
+    <Resource Include="Resources\Images\Achievements\Achievement-fancy.png" />
+    <Resource Include="Resources\Images\Achievements\Achievement-plain.png" />
+    <Resource Include="Resources\Images\Achievements\Archer.png" />
+    <Resource Include="Resources\Images\Achievements\banned.jpg" />
+    <Resource Include="Resources\Images\Achievements\Body_Guard.png" />
+    <Resource Include="Resources\Images\Achievements\clear.png" />
+    <Resource Include="Resources\Images\Achievements\effect.png" />
+    <Resource Include="Resources\Images\Achievements\File-Awarded_All_Trophies.png" />
+    <Resource Include="Resources\Images\Achievements\File-Lion_Tamer.png" />
+    <Resource Include="Resources\Images\Achievements\give.png" />
+    <Resource Include="Resources\Images\Achievements\Grid_Beacon.png" />
+    <Resource Include="Resources\Images\Achievements\Grid_Blaze_Rod.png" />
+    <Resource Include="Resources\Images\Achievements\Grid_Bone.png" />
+    <Resource Include="Resources\Images\Achievements\Grid_Book.png" />
+    <Resource Include="Resources\Images\Achievements\Grid_Bookshelf.png" />
+    <Resource Include="Resources\Images\Achievements\Grid_Bow.png" />
+    <Resource Include="Resources\Images\Achievements\Grid_Bread.png" />
+    <Resource Include="Resources\Images\Achievements\Grid_Cake.png" />
+    <Resource Include="Resources\Images\Achievements\Grid_Clock.png" />
+    <Resource Include="Resources\Images\Achievements\Grid_Coal.png" />
+    <Resource Include="Resources\Images\Achievements\Grid_Cobblestone.png" />
+    <Resource Include="Resources\Images\Achievements\Grid_Cooked_Fish.png" />
+    <Resource Include="Resources\Images\Achievements\Grid_Cooked_Porkchop.png" />
+    <Resource Include="Resources\Images\Achievements\Grid_Crafting_Table.png" />
+    <Resource Include="Resources\Images\Achievements\Grid_Diamond.png" />
+    <Resource Include="Resources\Images\Achievements\Grid_Diamond_Boots.png" />
+    <Resource Include="Resources\Images\Achievements\Grid_Diamond_Ore.png" />
+    <Resource Include="Resources\Images\Achievements\Grid_Diamond_Sword.png" />
+    <Resource Include="Resources\Images\Achievements\Grid_Dispenser.png" />
+    <Resource Include="Resources\Images\Achievements\Grid_Dragon_Egg.png" />
+    <Resource Include="Resources\Images\Achievements\Grid_Emerald.png" />
+    <Resource Include="Resources\Images\Achievements\Grid_Enchantment_Table.png" />
+    <Resource Include="Resources\Images\Achievements\Grid_Eye_of_Ender.png" />
+    <Resource Include="Resources\Images\Achievements\Grid_Flower_Pot.png" />
+    <Resource Include="Resources\Images\Achievements\Grid_Furnace.png" />
+    <Resource Include="Resources\Images\Achievements\Grid_Ghast_Tear.png" />
+    <Resource Include="Resources\Images\Achievements\Grid_Golden_Apple.png" />
+    <Resource Include="Resources\Images\Achievements\Grid_Iron_Ingot.png" />
+    <Resource Include="Resources\Images\Achievements\Grid_Jukebox.png" />
+    <Resource Include="Resources\Images\Achievements\Grid_Lava.png" />
+    <Resource Include="Resources\Images\Achievements\Grid_Leather.png" />
+    <Resource Include="Resources\Images\Achievements\Grid_Mundane_Potion.png" />
+    <Resource Include="Resources\Images\Achievements\Grid_Nether_Star.png" />
+    <Resource Include="Resources\Images\Achievements\Grid_Oak_Wood.png" />
+    <Resource Include="Resources\Images\Achievements\Grid_Obsidian.png" />
+    <Resource Include="Resources\Images\Achievements\Grid_Rail.png" />
+    <Resource Include="Resources\Images\Achievements\Grid_Rotten_Flesh.png" />
+    <Resource Include="Resources\Images\Achievements\Grid_Saddle.png" />
+    <Resource Include="Resources\Images\Achievements\Grid_Shears.png" />
+    <Resource Include="Resources\Images\Achievements\Grid_Sign.png" />
+    <Resource Include="Resources\Images\Achievements\Grid_Stone_Pickaxe.png" />
+    <Resource Include="Resources\Images\Achievements\Grid_Wheat.png" />
+    <Resource Include="Resources\Images\Achievements\Grid_Wither_Skeleton_Skull.png" />
+    <Resource Include="Resources\Images\Achievements\Grid_Wooden_Hoe.png" />
+    <Resource Include="Resources\Images\Achievements\Grid_Wooden_Pickaxe.png" />
+    <Resource Include="Resources\Images\Achievements\Grid_Wooden_Sword.png" />
+    <Resource Include="Resources\Images\Achievements\Iron_Man.png" />
+    <Resource Include="Resources\Images\Achievements\Leader_Of_The_Pack.png" />
+    <Resource Include="Resources\Images\Achievements\Lion_Tamer.png" />
+    <Resource Include="Resources\Images\Achievements\MOAR_Tools.png" />
+    <Resource Include="Resources\Images\Achievements\Rainbow_Collection.png" />
+    <Resource Include="Resources\Images\Achievements\Zombie_Doctor.png" />
+    <Resource Include="Resources\Images\dirt.png" />
+    <Resource Include="Resources\Images\FileEditor\Chest-Closed.png" />
+    <Resource Include="Resources\Images\FileEditor\Chest-Open.png" />
+    <Resource Include="Resources\Images\SGSLogo.png" />
+    <Resource Include="Resources\Images\StartBtn.png" />
+    <Resource Include="Resources\Images\StopBtn.png" />
+    <Content Include="Resources\Mods\MCMA-Mod-1.0.jar" />
+    <Content Include="Resources\Mods\worldedit-forge-mc1.8-6.0.2-SNAPSHOT-dist.jar" />
+    <Content Include="Resources\Themes\tinylaf-1_4_0\docs\allclasses-frame.html" />
+    <Content Include="Resources\Themes\tinylaf-1_4_0\docs\allclasses-noframe.html" />
+    <Content Include="Resources\Themes\tinylaf-1_4_0\docs\constant-values.html" />
+    <Content Include="Resources\Themes\tinylaf-1_4_0\docs\de\muntjak\tinylookandfeel\class-use\Theme.html" />
+    <Content Include="Resources\Themes\tinylaf-1_4_0\docs\de\muntjak\tinylookandfeel\class-use\ThemeDescription.html" />
+    <Content Include="Resources\Themes\tinylaf-1_4_0\docs\de\muntjak\tinylookandfeel\class-use\TinyTableHeaderUI.html" />
+    <Content Include="Resources\Themes\tinylaf-1_4_0\docs\de\muntjak\tinylookandfeel\package-frame.html" />
+    <Content Include="Resources\Themes\tinylaf-1_4_0\docs\de\muntjak\tinylookandfeel\package-summary.html" />
+    <Content Include="Resources\Themes\tinylaf-1_4_0\docs\de\muntjak\tinylookandfeel\package-tree.html" />
+    <Content Include="Resources\Themes\tinylaf-1_4_0\docs\de\muntjak\tinylookandfeel\package-use.html" />
+    <Content Include="Resources\Themes\tinylaf-1_4_0\docs\de\muntjak\tinylookandfeel\table\class-use\SortableTableData.html" />
+    <Content Include="Resources\Themes\tinylaf-1_4_0\docs\de\muntjak\tinylookandfeel\table\package-frame.html" />
+    <Content Include="Resources\Themes\tinylaf-1_4_0\docs\de\muntjak\tinylookandfeel\table\package-summary.html" />
+    <Content Include="Resources\Themes\tinylaf-1_4_0\docs\de\muntjak\tinylookandfeel\table\package-tree.html" />
+    <Content Include="Resources\Themes\tinylaf-1_4_0\docs\de\muntjak\tinylookandfeel\table\package-use.html" />
+    <Content Include="Resources\Themes\tinylaf-1_4_0\docs\de\muntjak\tinylookandfeel\table\SortableTableData.html" />
+    <Content Include="Resources\Themes\tinylaf-1_4_0\docs\de\muntjak\tinylookandfeel\Theme.html" />
+    <Content Include="Resources\Themes\tinylaf-1_4_0\docs\de\muntjak\tinylookandfeel\ThemeDescription.html" />
+    <Content Include="Resources\Themes\tinylaf-1_4_0\docs\de\muntjak\tinylookandfeel\TinyTableHeaderUI.html" />
+    <Content Include="Resources\Themes\tinylaf-1_4_0\docs\help-doc.html" />
+    <Content Include="Resources\Themes\tinylaf-1_4_0\docs\index-all.html" />
+    <Content Include="Resources\Themes\tinylaf-1_4_0\docs\index.html" />
+    <Content Include="Resources\Themes\tinylaf-1_4_0\docs\overview-frame.html" />
+    <Content Include="Resources\Themes\tinylaf-1_4_0\docs\overview-summary.html" />
+    <Content Include="Resources\Themes\tinylaf-1_4_0\docs\overview-tree.html" />
+    <Resource Include="Resources\Themes\tinylaf-1_4_0\docs\resources\inherit.gif" />
+    <Content Include="Resources\Themes\tinylaf-1_4_0\docs\stylesheet.css" />
+    <Resource Include="Resources\Themes\tinylaf-1_4_0\license\gpl.txt" />
+    <Resource Include="Resources\Themes\tinylaf-1_4_0\license\lgpl.txt" />
+    <Content Include="Resources\Themes\tinylaf-1_4_0\readme.html" />
+    <Content Include="Resources\Themes\tinylaf-1_4_0\tinycp.jar" />
+    <Content Include="Resources\Themes\tinylaf-1_4_0\tinylaf.jar" />
+    <Content Include="Resources\Themes\TinyLAF.jar" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
