@@ -34,7 +34,13 @@ namespace Minecraft_Server_Administrator
 
             achievement = new MenuItem();
             achievement.Header = "achievement";
-            achievement.PreviewMouseLeftButtonUp += achievement_PreviewMouseLeftButtonUp;
+            //achievement.PreviewMouseLeftButtonUp += achievement_PreviewMouseLeftButtonUp;
+            MenuItem give = new MenuItem { Header = "Give" };
+            give.PreviewMouseLeftButtonUp += achievement_give_PreviewMouseLeftButtonUp;
+            MenuItem take = new MenuItem { Header = "Take" };
+            take.PreviewMouseLeftButtonUp += achievement_take_PreviewMouseLeftButtonUp;
+            achievement.Items.Add(give);
+            achievement.Items.Add(take);
             this.Items.Add(achievement);
 
             ban = new MenuItem();
@@ -317,9 +323,13 @@ namespace Minecraft_Server_Administrator
             MinecraftServer.current.sendCommand("ban " + getName());
         }
 
-        void achievement_PreviewMouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        void achievement_give_PreviewMouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            new CustomPopup(MainWindowContent.instance).selectAchievement();
+            CustomPopup.createAchievementPopup(getName(), Minecraft_Server_Administrator.UI.CustomPopup.AchievementPopup.Achievement.GIVE).ShowDialog();
+        }
+        void achievement_take_PreviewMouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            CustomPopup.createAchievementPopup(getName(), Minecraft_Server_Administrator.UI.CustomPopup.AchievementPopup.Achievement.TAKE).ShowDialog();
         }
 
 
