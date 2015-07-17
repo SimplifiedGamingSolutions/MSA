@@ -38,9 +38,17 @@
   <PropertyGroup>
     <StartupObject>Minecraft_Server_Administrator.App</StartupObject>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>
+    </ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Fluent, Version=3.4.0.0, Culture=neutral, PublicKeyToken=3e436e32a8c5546f, processorArchitecture=MSIL">
       <HintPath>..\packages\Fluent.Ribbon.3.4.0\lib\net45\Fluent.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Hardcodet.Wpf.TaskbarNotification, Version=1.0.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Hardcodet.NotifyIcon.Wpf.1.0.5\lib\net45\Hardcodet.Wpf.TaskbarNotification.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="HtmlAgilityPack, Version=1.4.9.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
@@ -218,6 +226,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="SGSLogo.ico" />
     <Resource Include="Resources\eula.txt" />
     <Content Include="Resources\html\Copy of temp.html" />
     <Content Include="Resources\html\temp.html" />
@@ -289,6 +298,8 @@
     <Resource Include="Resources\Images\SGSLogo.png" />
     <Resource Include="Resources\Images\StartBtn.png" />
     <Resource Include="Resources\Images\StopBtn.png" />
+    <Resource Include="Resources\Images\SGSLogo.ico" />
+    <Resource Include="Resources\Images\Error.ico" />
     <Content Include="Resources\Mods\MCMA-Mod-1.0.jar" />
     <Content Include="Resources\Mods\worldedit-forge-mc1.8-6.0.2-SNAPSHOT-dist.jar" />
     <Content Include="Resources\Themes\tinylaf-1_4_0\docs\allclasses-frame.html" />

@@ -12,7 +12,19 @@
                      MinWidth="80"
                      MinHeight="60"
                      mc:Ignorable="d"
-                     WindowState="Normal">
-    <msa:MainWindowContent x:Name="mainWindowContent" />
+                     WindowState="Normal"
+             xmlns:tb="http://www.hardcodet.net/taskbar">
+    <Grid>
+        <!-- open menu on both left or right mouse click -->
+        <tb:TaskbarIcon IconSource="/Resources/Images/SGSLogo.ico" ToolTipText="Minecraft Server Administrator">
+            <tb:TaskbarIcon.ContextMenu>
+                <ContextMenu Background="LightCoral">
+                    <MenuItem Header="Open" Click="Tray_Open" />
+                    <MenuItem Header="Exit" Click="Tray_Close" />
+                </ContextMenu>
+            </tb:TaskbarIcon.ContextMenu>
+        </tb:TaskbarIcon>
+        <msa:MainWindowContent x:Name="mainWindowContent" />
+    </Grid>
 </Fluent:RibbonWindow>
 

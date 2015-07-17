@@ -23,7 +23,37 @@ namespace Minecraft_Server_Administrator
         public MainWindow()
         {
             InitializeComponent();
+            this.StateChanged += MainWindowContent_StateChanged;
+            this.Icon = BitmapFrame.Create(new Uri("pack://application:,,,/Minecraft Server Administrator;component/Resources/Images/SGSLogo.png"));
         }
+
+        void MainWindowContent_StateChanged(object sender, EventArgs e)
+        {
+            switch (this.WindowState)
+            {
+                case WindowState.Maximized:
+
+                    break;
+                case WindowState.Minimized:
+                    this.Visibility = System.Windows.Visibility.Collapsed;
+                    break;
+                case WindowState.Normal:
+                    this.Visibility = System.Windows.Visibility.Visible;
+                    break;
+            }
+        }
+
+        void Tray_Open(object sender, RoutedEventArgs e)
+        {
+            this.Visibility = System.Windows.Visibility.Visible;
+            this.WindowState = WindowState.Normal;
+        }
+
+        void Tray_Close(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
         private void ZoomSlider_OnValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             TextOptions.SetTextFormattingMode(this, e.NewValue > 1.0 ? TextFormattingMode.Ideal : TextFormattingMode.Display);
