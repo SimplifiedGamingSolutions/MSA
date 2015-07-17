@@ -93,12 +93,12 @@
                     <Fluent:Button Name="buttonStart" Header="Start" Icon="pack://application:,,,/Minecraft Server Administrator;component/Images/Green.png" LargeIcon="pack://application:,,,/Minecraft Server Administrator;component/Images/GreenLarge.png" Click="buttonStart_Click" />
                     <Fluent:Button Name="buttonStop" Header="Stop" Icon="pack://application:,,,/Minecraft Server Administrator;component/Images/Gray.png" LargeIcon="pack://application:,,,/Minecraft Server Administrator;component/Images/GrayLarge.png" Click="buttonStop_Click" />
                     <Fluent:Button Name="buttonRestart" Header="Restart" Icon="pack://application:,,,/Minecraft Server Administrator;component/Images/Gray.png" LargeIcon="pack://application:,,,/Minecraft Server Administrator;component/Images/GrayLarge.png" Click="buttonRestart_Click" />
+                    <Fluent:Button Header="Save" Icon="pack://application:,,,/Minecraft Server Administrator;component/Images/Gray.png" LargeIcon="pack://application:,,,/Minecraft Server Administrator;component/Images/GrayLarge.png" Click="buttonSave_Click" />
                 </Fluent:RibbonGroupBox>
-                <Fluent:RibbonGroupBox Header="World Commands">
-                    <Fluent:Button Name="button1" Header="Weather" Icon="pack://application:,,,/Minecraft Server Administrator;component/Images/Green.png" LargeIcon="pack://application:,,,/Minecraft Server Administrator;component/Images/GreenLarge.png" Click="buttonWeather_Click" />
-                    <Fluent:Button Name="button2" Header="Time" Icon="pack://application:,,,/Minecraft Server Administrator;component/Images/Gray.png" LargeIcon="pack://application:,,,/Minecraft Server Administrator;component/Images/GrayLarge.png" Click="buttonStop_Click" />
-                    <Fluent:Button Name="button3" Header="Save" Icon="pack://application:,,,/Minecraft Server Administrator;component/Images/Gray.png" LargeIcon="pack://application:,,,/Minecraft Server Administrator;component/Images/GrayLarge.png" Click="buttonRestart_Click" />
-                    <Fluent:Button Name="button4" Header="Game Mode" Icon="pack://application:,,,/Minecraft Server Administrator;component/Images/Gray.png" LargeIcon="pack://application:,,,/Minecraft Server Administrator;component/Images/GrayLarge.png" Click="buttonRestart_Click" />
+                <Fluent:RibbonGroupBox Header="Quick Commands">
+                    <Fluent:Button Header="Weather" Icon="pack://application:,,,/Minecraft Server Administrator;component/Images/Gray.png" LargeIcon="pack://application:,,,/Minecraft Server Administrator;component/Images/GrayLarge.png" Click="buttonWeather_Click" />
+                    <Fluent:Button Header="Time" Icon="pack://application:,,,/Minecraft Server Administrator;component/Images/Gray.png" LargeIcon="pack://application:,,,/Minecraft Server Administrator;component/Images/GrayLarge.png" Click="buttonTime_Click" />
+                    <Fluent:Button Header="Default Game Mode" Icon="pack://application:,,,/Minecraft Server Administrator;component/Images/Gray.png" LargeIcon="pack://application:,,,/Minecraft Server Administrator;component/Images/GrayLarge.png" Click="button_defaultGameMode_Click" />
                 </Fluent:RibbonGroupBox>
             </Fluent:RibbonTabItem>
             <!--Contextual Tabs-->

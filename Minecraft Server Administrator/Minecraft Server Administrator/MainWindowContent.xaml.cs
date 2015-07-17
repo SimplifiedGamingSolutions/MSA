@@ -149,16 +149,31 @@ namespace Minecraft_Server_Administrator
             MinecraftServer.current.stopServer();
         }
 
-        private void buttonWeather_Click(object sender, RoutedEventArgs e)
-        {
-            MessageBox.Show(System.IO.Path.Combine(Environment.GetEnvironmentVariable("JAVA_HOME"), "java.exe"));
-        }
-
         private void buttonRestart_Click(object sender, RoutedEventArgs e)
         {
             MinecraftServer.current.stopServer();
             while (MinecraftServer.current.isRunning()) { }
             MinecraftServer.current.startServer();
+        }
+
+        private void buttonSave_Click(object sender, RoutedEventArgs e)
+        {
+            MinecraftServer.current.sendCommand("save-all");
+        }
+
+        private void buttonWeather_Click(object sender, RoutedEventArgs e)
+        {
+            MinecraftServer.current.sendCommand("toggledownfall");
+        }
+
+        private void buttonTime_Click(object sender, RoutedEventArgs e)
+        {
+            MinecraftServer.current.sendCommand("save-all");
+        }
+
+        private void button_defaultGameMode_Click(object sender, RoutedEventArgs e)
+        {
+            //MinecraftServer.current.sendCommand("save-all");
         }
 
         private static void populatePropertiesTab(MinecraftServer server)
