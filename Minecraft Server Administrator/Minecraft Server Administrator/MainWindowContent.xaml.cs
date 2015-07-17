@@ -276,18 +276,18 @@ namespace Minecraft_Server_Administrator
             MainWindowContent.instance.ConfigGrid.Children.Add(textBox);
         }
 
-        static void NumericOnly(object sender, System.Windows.Input.TextCompositionEventArgs e)
+        public static void NumericOnly(object sender, System.Windows.Input.TextCompositionEventArgs e)
         {
             e.Handled = !IsTextAllowed(e.Text);
         }
 
-        private static bool IsTextAllowed(string text)
+        public static bool IsTextAllowed(string text)
         {
             Regex regex = new Regex("[^0-9.-]+"); //regex that matches disallowed text
             return !regex.IsMatch(text);
         }
 
-        private static void TextBoxPasting(object sender, DataObjectPastingEventArgs e)
+        public static void TextBoxPasting(object sender, DataObjectPastingEventArgs e)
         {
             if (e.DataObject.GetDataPresent(typeof(String)))
             {

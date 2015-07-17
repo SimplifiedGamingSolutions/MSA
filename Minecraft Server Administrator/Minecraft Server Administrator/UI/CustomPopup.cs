@@ -22,6 +22,7 @@ namespace Minecraft_Server_Administrator.UI
             grid = new Grid();
             this.Content = grid;
             this.player_name = player_name;
+            this.SizeChanged += CustomPopup_SizeChanged;
         }
 
         public static AchievementPopup createAchievementPopup(string player_name, Minecraft_Server_Administrator.UI.CustomPopup.AchievementPopup.Achievement action)
@@ -30,11 +31,102 @@ namespace Minecraft_Server_Administrator.UI
 
         }
 
-        /*void CustomPopup_SizeChanged(object sender, SizeChangedEventArgs e)
+        public static EffectPopup createEffectPopup(string player_name)
         {
-            this.Title = String.Concat("Height: ", ActualHeight, "Width: ", ActualWidth);
-        }*/
+            return new EffectPopup(player_name);
+        }
 
+        void CustomPopup_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            //this.Title = String.Concat("Height: ", ActualHeight, "Width: ", ActualWidth);
+        }
+        
+        public class EffectPopup : CustomPopup
+        {
+            ComboBox effectBox = new ComboBox();
+            TextBox durationBox = new TextBox();
+            TextBox amplifierBox = new TextBox();
+            ComboBox hideParticlesBox = new ComboBox();
+            public EffectPopup(string player_name) : base(player_name)
+            {
+                this.Title = "Give '" + player_name + "' effect.";
+                this.Height = 110;
+                this.Width = 550;
+                this.ResizeMode = System.Windows.ResizeMode.NoResize;
+                grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+                grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+                grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
+                grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+                grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
+                grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+                grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
+                grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+                grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
+                grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+
+                Label label1 = new Label { Content = "Effect" };
+                Grid.SetRow(label1, 0);
+                Grid.SetColumn(label1, 0);
+                grid.Children.Add(label1);
+                effectBox.VerticalAlignment = VerticalAlignment.Center;
+                effectBox.Items.Add(new ComboBoxItem { Content = "effect" });
+                Grid.SetRow(effectBox, 0);
+                Grid.SetColumn(effectBox, 1);
+                grid.Children.Add(effectBox);
+
+                Label label2 = new Label { Content = "(Optional)\nSeconds" };
+                Grid.SetRow(label2, 0);
+                Grid.SetColumn(label2, 2);
+                grid.Children.Add(label2);
+                durationBox.VerticalAlignment = VerticalAlignment.Center;
+                durationBox.TextAlignment = TextAlignment.Left;
+                durationBox.PreviewTextInput += MainWindowContent.NumericOnly;
+                DataObject.AddPastingHandler(durationBox, MainWindowContent.TextBoxPasting);
+                Grid.SetRow(durationBox, 0);
+                Grid.SetColumn(durationBox, 3);
+                grid.Children.Add(durationBox);
+
+                Label label3 = new Label { Content = "(Optional)\nAmplifier" };
+                Grid.SetRow(label3, 0);
+                Grid.SetColumn(label3, 4);
+                grid.Children.Add(label3);
+                amplifierBox.VerticalAlignment = VerticalAlignment.Center;
+                amplifierBox.TextAlignment = TextAlignment.Left;
+                amplifierBox.PreviewTextInput += MainWindowContent.NumericOnly;
+                DataObject.AddPastingHandler(amplifierBox, MainWindowContent.TextBoxPasting);
+                Grid.SetRow(amplifierBox, 0);
+                Grid.SetColumn(amplifierBox, 5);
+                grid.Children.Add(amplifierBox);
+
+                Label label4 = new Label { Content = "(Optional)\nhideParticles" };
+                Grid.SetRow(label4, 0);
+                Grid.SetColumn(label4, 6);
+                grid.Children.Add(label4);
+                hideParticlesBox.VerticalAlignment = VerticalAlignment.Center;
+                hideParticlesBox.Items.Add(new ComboBoxItem { Content = true });
+                hideParticlesBox.Items.Add(new ComboBoxItem { Content = false });
+                Grid.SetRow(hideParticlesBox, 0);
+                Grid.SetColumn(hideParticlesBox, 7);
+                grid.Children.Add(hideParticlesBox);
+
+                Button button = new Button{ Content = "Send" };
+                button.Click += button_Click;
+                Grid.SetRow(button, 1);
+                Grid.SetColumnSpan(button, 8);
+                button.VerticalAlignment = VerticalAlignment.Center;
+                button.Width = 50;
+                grid.Children.Add(button);
+
+            }
+
+            void button_Click(object sender, RoutedEventArgs e)
+            {
+                MessageBox.Show(String.Concat("effect ", player_name, " ", durationBox.Text, " ", (effectBox.SelectedItem as ComboBoxItem).Content, " ", amplifierBox.Text, " ", (hideParticlesBox.SelectedItem as ComboBoxItem).Content));
+                MinecraftServer.current.sendCommand(String.Concat("effect ", player_name, " ", durationBox.Text, " ", (effectBox.SelectedItem as ComboBoxItem).Content, " ", amplifierBox.Text, " ", (hideParticlesBox.SelectedItem as ComboBoxItem).Content));
+                this.Close();
+            }
+
+        }
 
         public class AchievementPopup : CustomPopup
         {

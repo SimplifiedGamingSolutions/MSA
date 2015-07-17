@@ -290,7 +290,7 @@ namespace Minecraft_Server_Administrator
 
         void effect_PreviewMouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            throw new NotImplementedException();
+            CustomPopup.createEffectPopup(getName()).ShowDialog();
         }
 
         void difficulty_PreviewMouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
