@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -24,7 +25,13 @@ namespace Minecraft_Server_Administrator
         {
             InitializeComponent();
             this.StateChanged += MainWindowContent_StateChanged;
+            this.IsVisibleChanged += MainWindow_IsVisibleChanged;
             this.Icon = BitmapFrame.Create(new Uri("pack://application:,,,/Minecraft Server Administrator;component/Resources/Images/SGSLogo.png"));
+        }
+
+        void MainWindow_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            this.WindowState = System.Windows.WindowState.Normal;
         }
 
         void MainWindowContent_StateChanged(object sender, EventArgs e)
@@ -32,13 +39,11 @@ namespace Minecraft_Server_Administrator
             switch (this.WindowState)
             {
                 case WindowState.Maximized:
-
                     break;
                 case WindowState.Minimized:
                     this.Visibility = System.Windows.Visibility.Collapsed;
                     break;
                 case WindowState.Normal:
-                    this.Visibility = System.Windows.Visibility.Visible;
                     break;
             }
         }
@@ -46,7 +51,11 @@ namespace Minecraft_Server_Administrator
         void Tray_Open(object sender, RoutedEventArgs e)
         {
             this.Visibility = System.Windows.Visibility.Visible;
-            this.WindowState = WindowState.Normal;
+        }
+
+        void Tray_Minimize(object sender, RoutedEventArgs e)
+        {
+            this.WindowState = System.Windows.WindowState.Minimized;
         }
 
         void Tray_Close(object sender, RoutedEventArgs e)

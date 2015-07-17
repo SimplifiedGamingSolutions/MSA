@@ -19,8 +19,9 @@
         <tb:TaskbarIcon IconSource="/Resources/Images/SGSLogo.ico" ToolTipText="Minecraft Server Administrator">
             <tb:TaskbarIcon.ContextMenu>
                 <ContextMenu Background="LightCoral">
-                    <MenuItem Header="Open" Click="Tray_Open" />
-                    <MenuItem Header="Exit" Click="Tray_Close" />
+                    <MenuItem Header="Restore" Click="Tray_Open" />
+                    <MenuItem Header="Minimize" Click="Tray_Minimize" />
+                    <MenuItem Header="Close" Click="Tray_Close" />
                 </ContextMenu>
             </tb:TaskbarIcon.ContextMenu>
         </tb:TaskbarIcon>
