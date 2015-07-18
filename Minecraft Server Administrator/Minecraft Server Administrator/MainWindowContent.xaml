@@ -148,7 +148,18 @@
             <TabItem Header="Mod Configuration">
                 <Border BorderBrush="#FFACACAC" BorderThickness="1">
                     <Grid x:Name="ModGrid">
-                        <ScrollViewer x:Name="ModScrollViewer"/>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="20"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBox Grid.Column="0" Grid.Row="0">Search</TextBox>
+                        <TreeView Grid.Column="0" Grid.Row="1">Treeview
+                            <TreeViewItem>mods</TreeViewItem>
+                        </TreeView>
                     </Grid>
                 </Border>
             </TabItem>
